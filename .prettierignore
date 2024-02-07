@@ -1,0 +1,7 @@
+# Ignore artifacts:
+build
+coverage
+webpack.config.js
+.eslintrc.json
+cred.js
+main.js
