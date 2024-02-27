@@ -11,9 +11,7 @@ html {
 body {
     width: 100%;
     height: 100%;
-    
     display: grid;
-    
     grid-template-columns: 0.5fr 6fr 0.5fr;
     grid-template-rows: 0.2fr 10fr 1fr;
 }
@@ -23,12 +21,9 @@ header {
 
     font-size: 0.9rem;
     font-weight: bold;
-
     background-color: #121212;
     max-height: 60px;
-
     grid-area: 1 / 1 / 2 / -1;
-
     display: flex;
     justify-content: center;
 }
@@ -38,18 +33,15 @@ header {
 
     min-width: 85%;
     height: 60px;
-
     display: flex;
 }
 
 ul {
     width: 100%;
-
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-
 }
 
 li {
@@ -69,7 +61,6 @@ li {
     border-radius: 4px;
     padding: 4px 10px;
     margin: 0 6px;
-
     cursor: pointer;
 }
 
@@ -94,6 +85,7 @@ li {
 
 .search-container {
     /* border: 2px solid yellow; */
+
     display: flex;
     flex: 1;
 }
@@ -104,11 +96,9 @@ li {
     border-right: 1px solid grey;
     border-radius: 4px 0 0 4px;
     height: 24px;
-
     display: flex;
     align-items: center;
     padding: 4px 12px;
-
     cursor: pointer;
 }
 
@@ -140,7 +130,6 @@ li {
 .search-icon-container {
     /* border: 1px solid red; */
     border-radius: 0px 4px 4px 0;
-
     padding: 4px 6px;
     height: 24px;
     background-color: white;
@@ -151,15 +140,11 @@ li {
 
 .watchlist-container {
     /* border: 1px solid red; */
+
     border-radius: 4px;
-
-
     display: flex;
-    /* flex: 1; */
-
     padding: 4px 10px;
     margin: 0 6px;
-
     cursor: pointer;
 }
 
@@ -185,9 +170,7 @@ main {
     /* border: 2px solid red; */
 
     grid-area: 2 / 2 / span 1 / span 1;
-
     display: grid;
-
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 4fr repeat(4, 2.2fr);
 }
@@ -201,13 +184,9 @@ section {
 
     background-color: black;
     grid-area: 1 / 1 / span 1 / -1;
-
     min-height: 550px;
-
     display: flex;
     gap: 10px;
-
-
 }
 
 .main-image-container {
@@ -232,13 +211,10 @@ section {
     /* border: 2px solid red; */
 
     min-width: 800px;
-
     flex: 2;
-
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
     position: relative;
 }
 
@@ -246,11 +222,10 @@ section {
     /* border: 2px solid green; */
 
     color: white;
-
     bottom: 0;
-    right: 0;
-    width: 75%;
-
+    margin-right: auto;
+    margin-left: 210px;
+    width: 70%;
     flex: 1;
 }
 
@@ -258,7 +233,6 @@ section {
     position: absolute;
     bottom: 0;
     left: 18px;
-
     box-shadow: 0 0 10px 4px white;
 }
 
@@ -267,8 +241,6 @@ section {
 
     font-size: 2rem;
     padding: 10px;
-
-
     flex: 2;
 }
 
@@ -276,39 +248,35 @@ section {
     /* border: 1px solid cyan; */
 
     font-size: 1rem;
-
     display: flex;
     flex-direction: row;
     padding: 0 10px;
     gap: 1rem;
-
-
     flex: 1;
 }
 
 .main-movie-actor {
-    border: 2px solid white;
+    border: 1px solid gray;
     border-radius: 50px;
-
     padding: 4px 8px;
+    cursor: pointer;
 }
 
 
-
 .secondary-popular-section {
-    border: 2px solid blue;
+    /* border: 2px solid blue; */
 
     min-width: 350px;
+    max-height: 580px;
     position: relative;
     flex: 1;
-
     display: flex;
     flex-direction: column;
     gap: 18px;
 }
 
 .secondary-title {
-    border: 1px solid white;
+    /* border: 1px solid white; */
 
     color: #F5C518;
     font-size: 1.2rem;
@@ -318,15 +286,15 @@ section {
 }
 
 .pop-movie-container {
-    border: 1px solid white;
+    /* border: 1px solid white; */
 
-
+    color: white;
+    display: flex;
+    flex-direction: row;
     flex: 1;
 }
 
 .pop-two {
-    /* border: none; */
-
     background-color: rgb(17 17 17);
     position: relative;
 }
@@ -342,11 +310,47 @@ section {
     pointer-events: none;
 }
 
+.secondary-poster-container {
+    /* border: 2px solid red; */
 
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.secondary-popular-section img {
+    border: 1px solid white;
 
+    z-index: 1;
+    position: relative;
+    margin: 10px;
+    display: flex;
 
+}
 
+.secondary-text-container {
+    /* border: 2px solid green; */
+
+    width: fit-content;
+    margin: 10px 0;
+    padding: 10px;
+    flex: 1;
+}
+
+.up-next-title {
+    font-size: 1.2rem;
+
+}
+
+.pop-two-genres {
+    font-size: 0.9rem;
+}
+
+.secondary-movie-actor {
+    flex: 1;
+    width: fit-content;
+}
 
 
 
@@ -355,6 +359,8 @@ section {
 
     background-color: black;
     grid-area: 2 / 1 / span 1 / -1;
+
+    min-width: 1160px;
 }
 
 .upcoming {
@@ -377,6 +383,5 @@ footer {
     background-color: grey;
 
     grid-area: 3 / 1 / span 1 / -1;
-
     color: white;
 }
