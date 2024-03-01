@@ -13,7 +13,7 @@ body {
     height: 100%;
     display: grid;
     grid-template-columns: 0.5fr 6fr 0.5fr;
-    grid-template-rows: 0.2fr 10fr 1fr;
+    grid-template-rows: 0.2fr 10fr 0.8fr;
 }
 
 header {
@@ -170,9 +170,10 @@ main {
     /* border: 2px solid red; */
 
     grid-area: 2 / 2 / span 1 / span 1;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 4fr repeat(4, 2.2fr);
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 1260px;
 }
 
 section {
@@ -180,13 +181,24 @@ section {
 }
 
 .popular {
-    /* border: 1px solid white; */
+    /* border: 1px solid deeppink; */
 
     background-color: black;
-    grid-area: 1 / 1 / span 1 / -1;
+    /* grid-area: 1 / 1 / span 1 / -1; */
     min-height: 550px;
     display: flex;
     gap: 10px;
+}
+
+.main-popular-section {
+    /* border: 2px solid red; */
+
+    min-width: 800px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: relative;
 }
 
 .main-image-container {
@@ -207,16 +219,7 @@ section {
     pointer-events: none;
   }
 
-.main-popular-section {
-    /* border: 2px solid red; */
 
-    min-width: 800px;
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    position: relative;
-}
 
 .main-text-container {
     /* border: 2px solid green; */
@@ -276,13 +279,10 @@ section {
 }
 
 .secondary-title {
-    /* border: 1px solid white; */
-
     color: #F5C518;
     font-size: 1.2rem;
     font-weight: bold;
     padding: 6px;
-
 }
 
 .pop-movie-container {
@@ -354,32 +354,159 @@ section {
 
 
 
-.featured-today {
-    border: 1px solid white;
+.small-section {
+    height: 550px;
+    color: white;
+}
 
-    background-color: black;
+
+
+.in-theatres {
+    /* border: 1px solid white; */
+
+    margin-top: 40px;
+    color: white;
     grid-area: 2 / 1 / span 1 / -1;
-
     min-width: 1160px;
 }
 
+.small-section-title {
+    /* border: 1px solid white; */
+
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 6px;
+}
+
+.small-section-title::before {
+    content: "";
+    border: 2px solid rgb(245 197 25); 
+    border-radius: 1px;
+    margin-right: 8px;
+}
+
+.it-movie-cards-container {
+    /* border: 1px solid yellow; */
+
+    height: 90%;
+
+    display: flex;
+}
+
+.it-movie-card {
+    background-color: rgb(26 26 26);
+
+    /* border: 1px solid white; */
+
+    flex: 1;
+    margin: 0 10px;
+}
+
+.card-poster-container {
+    cursor: pointer;
+}
+
+.card-text-container {
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.rating-container,
+.it-title {
+    margin: 0 8px;
+}
+
+.it-title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+svg.star-icon {
+    fill: rgb(245 197 25);
+}
+
+.it-first-rating {
+    font-size: 1.1rem;
+    color: #FFFFFFB3;
+}
+
+.it-first-title {
+    margin-top: 10px;
+}
+
+.card-btn {
+    outline: 0;
+    border: 0;
+    border-radius: 4px;
+    padding: 6px 30px;
+    margin: 0px 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: bold;
+    flex: 1;
+    cursor: pointer;
+}
+
+button.add-to-watchlist {
+    background-color: rgb(44 44 44);
+    color: #5799ef;
+    margin-top: 24px;
+}
+
+button.add-to-watchlist:hover {
+    background-color: #5799ef2a;
+}
+
+button.trailer-btn {
+    background-color: inherit;
+    color: white;
+    margin-top: 18px;
+}
+
+button.trailer-btn:hover {
+    background-color: rgb(44 44 44);
+}
+
+button > svg {
+    height: 24px;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+
+
+
+
+
+
 .upcoming {
-    background-color: deeppink;
+    border: 1px solid white;
+
+    /* background-color: deeppink; */
+
     grid-area: 3 / 1 / span 1 / -1;
 }
 
-.what-to-watch {
-    background-color: lightseagreen;
+.top-rated {
+    border: 1px solid white;
+
+    /* background-color: lightseagreen; */
     grid-area: 4 / 1 / span 1 / -1;
 }
 
 .people-trending {
-    background-color: orange;
+    border: 1px solid white;
+
+    /* background-color: orange; */
     grid-area: 5 / 1 / span 1 / -1;
 }
 
 footer {
-    border: 2px solid blue;
+    border: 1px solid blue;
+
     background-color: grey;
 
     grid-area: 3 / 1 / span 1 / -1;
