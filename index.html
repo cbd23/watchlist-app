@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Badila's IMDb clone</title>
     <link rel="icon" type="image/x-icon" href="../src/images/imdb-logo.webp">
-    <script src="./main.js" defer></script>
+    <script type="module" src="./main.js" defer></script>
   </head>
   <body>
         <header>
@@ -42,47 +42,44 @@
             <section class="popular">
                 <div class="main-popular-section">
                     <div class="main-image-container">
-                        <img src="https://image.tmdb.org/t/p/original/yyFc8Iclt2jxPmLztbP617xXllT.jpg" alt="movie-backdrop-image" width="100%">
+                        <img class="popular-main-image" alt="movie-backdrop-image" width="100%">
                     </div>
-                    <div class="main-poster">
-                        <img src="https://image.tmdb.org/t/p/original/qhb1qOilapbapxWQn9jtRCMwXJF.jpg" alt="movie-poster" height="250px">
+                    <div class="main-poster-container">
+                        <img class="main-poster" alt="movie-poster" height="250px">
                     </div>
                     <div class="main-text-container">
-                        <div class="main-title">Willy Wonka</div>
-                        <div class="main-starring">
-                            <div class="first-actor-main main-movie-actor">Brad Pitt</div>
-                            <div class="second-actor-main main-movie-actor">Blake Lively</div>
-                            <div class="third-actor-main main-movie-actor">Jamie Foxx</div>
-                        </div>
+                        <div class="main-title"></div>
+                        <div class="main-genres"></div>
+                        <div class="main-overview"></div>
                     </div>
                 </div>
                 <div class="secondary-popular-section">
                     <div class="secondary-title">Up next</div>
                     <div class="pop-movie-container pop-two">
                         <div class="secondary-poster-container">
-                            <img src="https://image.tmdb.org/t/p/original/9GBhzXMFjgcZ3FdR9w3bUMMTps5.jpg" alt="movie-poster" height="130px">
+                            <img class="second-pop-poster" alt="movie-poster" height="130px">
                         </div>
                         <div class="secondary-text-container">
-                            <div class="pop-two-title up-next-title">The Marvels</div>
-                            <span class="pop-two-genres">Action/Adventure</span>
+                            <div class="pop-two-title up-next-title"></div>
+                            <span class="pop-two-genres"></span>
                         </div>
                     </div>
                     <div class="pop-movie-container pop-three">
                         <div class="secondary-poster-container">
-                            <img src="https://image.tmdb.org/t/p/original/A7EByudX0eOzlkQ2FIbogzyazm2.jpg" alt="movie-poster" height="130px">
+                            <img class="third-pop-poster" alt="movie-poster" height="130px">
                         </div>
                         <div class="secondary-text-container">
-                            <div class="pop-two-title up-next-title">The Beekeeper</div>
-                            <span class="pop-two-genres">Action/Thriller</span>
+                            <div class="pop-three-title up-next-title"></div>
+                            <span class="pop-three-genres"></span>
                         </div>
                     </div>
                     <div class="pop-movie-container pop-four">
                         <div class="secondary-poster-container">
-                            <img src="https://image.tmdb.org/t/p/original/rULWuutDcN5NvtiZi4FRPzRYWSh.jpg" alt="movie-poster" height="130px">
+                            <img class="fourth-pop-poster" alt="movie-poster" height="130px">
                         </div>
                         <div class="secondary-text-container">
-                            <div class="pop-two-title up-next-title">Madame Web</div>
-                            <span class="pop-two-genres">Sci-Fi/Action</span>
+                            <div class="pop-four-title up-next-title"></div>
+                            <span class="pop-four-genres"></span>
                         </div>
                     </div>
                 </div>
