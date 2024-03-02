@@ -1,4 +1,6 @@
 import './style.css'
+import { buttons, popularElements } from './DOM-elements.js'
+import { genreData } from './genre-data.js'
 import { API_KEY } from './cred'
 
 // store the base url, that'll be used in every request
@@ -56,7 +58,7 @@ const TOP_RATED_URL = BASE_URL + '/movie/top_rated?language=en-US&page=1'
 // const MOVIE_CREDITS_URL
 
 // Get the poster image or the backdrop image for a MOVIE
-const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/original/' + 'zVMyvNowgbsBAL6O6esWfRpAcOb.jpg'
+const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/original'
 
 // GET 'UPCOMING'
 
@@ -99,12 +101,98 @@ getNowPlayingMovies(NOW_PLAYING_URL, OPTIONS)
 // GET 'POPULAR'
 
 async function getPopularMovies (url, options) {
+  // create an arr that'll store the most popular four movies that will be displayed in the POPULAR section
+  const popularMoviesArr = []
+
   try {
     const response = await fetch(url, options)
 
     if (response.status === 200) {
       const data = await response.json()
-      console.log(data)
+
+      // push the popular movies that we'll display into an arr
+      popularMoviesArr.push(data.results[0], data.results[1], data.results[2], data.results[3])
+
+      // log the arr to check that everything works
+      console.log('Popular Movies Arr: ')
+      console.log(popularMoviesArr)
+
+      // update info about THE MOST POPULAR movie
+      popularElements.mainPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[0].poster_path
+      popularElements.mainImage.src = MOVIE_IMAGE_URL + popularMoviesArr[0].backdrop_path
+      popularElements.mainTitle.innerText = popularMoviesArr[0].title
+      popularElements.mainOverview.innerText = popularMoviesArr[0].overview
+
+      // store genre_ids for main movie in an arr
+      let mainMovieGenresArr = []
+      mainMovieGenresArr = popularMoviesArr[0].genre_ids
+
+      // display each genre inside mainGenres element
+      mainMovieGenresArr.forEach(genreId => {
+        const genreName = findGenreNameById(genreId)
+        const mainMovieGenre = document.createElement('div')
+        mainMovieGenre.innerText = genreName
+        mainMovieGenre.classList.add('main-movie-genre')
+        popularElements.mainGenres.appendChild(mainMovieGenre)
+      })
+
+      // repeat for the SECOND MOST POPULAR movie
+      popularElements.secondPopPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[1].poster_path
+      popularElements.popTwoTitle.innerText = popularMoviesArr[1].title
+
+      let secondPopMovieGenresArr = []
+      secondPopMovieGenresArr = popularMoviesArr[1].genre_ids
+
+      secondPopMovieGenresArr.forEach((genreId, index) => {
+        const genreName = findGenreNameById(genreId)
+        const popTwoMovieGenre = document.createElement('span')
+        popTwoMovieGenre.innerText = genreName
+
+        // add a '/' between each genre name, but not before the 1st one or after the last one
+        if (index !== secondPopMovieGenresArr.length - 1) {
+          popTwoMovieGenre.innerText += ' / '
+        }
+
+        popularElements.popTwoGenres.appendChild(popTwoMovieGenre)
+      })
+
+      // repeat for the THIRD MOST POPULAR movie
+      popularElements.thirdPopPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[2].poster_path
+      popularElements.popThreeTitle.innerText = popularMoviesArr[2].title
+
+      let thirdPopMovieGenresArr = []
+      thirdPopMovieGenresArr = popularMoviesArr[2].genre_ids
+
+      thirdPopMovieGenresArr.forEach((genreId, index) => {
+        const genreName = findGenreNameById(genreId)
+        const popThreeMovieGenre = document.createElement('span')
+        popThreeMovieGenre.innerText = genreName
+
+        if (index !== thirdPopMovieGenresArr.length - 1) {
+          popThreeMovieGenre.innerText += ' / '
+        }
+
+        popularElements.popThreeGenres.appendChild(popThreeMovieGenre)
+      })
+
+      // repeat for the FOURTH MOST POPULAR movie
+      popularElements.fourthPopPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[3].poster_path
+      popularElements.popFourTitle.innerText = popularMoviesArr[3].title
+
+      let fourthPopMovieGenresArr = []
+      fourthPopMovieGenresArr = popularMoviesArr[3].genre_ids
+
+      fourthPopMovieGenresArr.forEach((genreId, index) => {
+        const genreName = findGenreNameById(genreId)
+        const popFourMovieGenre = document.createElement('span')
+        popFourMovieGenre.innerText = genreName
+
+        if (index !== fourthPopMovieGenresArr.length - 1) {
+          popFourMovieGenre.innerText += ' / '
+        }
+
+        popularElements.popFourGenres.appendChild(popFourMovieGenre)
+      })
     } else {
       console.log('There was a problem with the request.')
     }
@@ -155,28 +243,7 @@ async function getMovieCredits (id, options) {
 
 // GET 'MOVIE IMAGE'
 
-async function getMovieImage (url, options) {
-  try {
-    const response = await fetch(url, options)
-
-    if (response.status === 200) {
-      const data = await response.json()
-      console.log(data)
-    } else {
-      console.log('There was a problem with the request.')
-    }
-  } catch (error) {
-    console.log('Error: ', error)
-  }
-}
-
-// getMovieImage(MOVIE_CREDITS_URL, OPTIONS)
-
-// GENRES ##################################################################################################################
-
-// const MOVIE_GENRES_URL = BASE_URL + '/genre/movie/list?language=en'
-
-// async function getMovieGenres (url, options) {
+// async function getMovieImage (url, options) {
 //   try {
 //     const response = await fetch(url, options)
 
@@ -191,35 +258,11 @@ async function getMovieImage (url, options) {
 //   }
 // }
 
-// getMovieGenres(MOVIE_GENRES_URL, OPTIONS)
+// getMovieImage(MOVIE_CREDITS_URL, OPTIONS)
 
-// store all the genres and their corresponding id, so we can map them later
-const genreData = [
-  { id: 28, name: 'Action' },
-  { id: 12, name: 'Adventure' },
-  { id: 16, name: 'Animation' },
-  { id: 35, name: 'Comedy' },
-  { id: 80, name: 'Crime' },
-  { id: 99, name: 'Documentary' },
-  { id: 18, name: 'Drama' },
-  { id: 10751, name: 'Family' },
-  { id: 14, name: 'Fantasy' },
-  { id: 36, name: 'History' },
-  { id: 27, name: 'Horror' },
-  { id: 10402, name: 'Music' },
-  { id: 9648, name: 'Mystery' },
-  { id: 10749, name: 'Romance' },
-  { id: 878, name: 'Science Fiction' },
-  { id: 10770, name: 'TV Movie' },
-  { id: 53, name: 'Thriller' },
-  { id: 10752, name: 'War' },
-  { id: 37, name: 'Western' }
-]
-
-// BUTTONS:
-
-const homeBtn = document.querySelector('logo-container')
-const menuBtn = document.querySelector('.menu-container')
-const searchFilterBtn = document.querySelector('.search-filter-container')
-const searchBarBtn = document.getElementById('searchbar')
-const searchIconBtn = document.querySelector('.search-icon-container')
+// create a fn that takes a genreId as an arg and returns the genre's name
+// this uses the genreData arr from our 'genre-data.js' module
+function findGenreNameById (genreId) {
+  const genre = genreData.find(genre => genre.id === genreId)
+  return genre ? genre.name : 'Unknown'
+}
