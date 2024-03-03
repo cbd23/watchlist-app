@@ -378,25 +378,20 @@ section {
 .small-section {
     height: 550px;
     color: white;
-}
-
-
-
-.in-theatres {
-    /* border: 1px solid white; */
-
-    margin-top: 40px;
-    color: white;
-    grid-area: 2 / 1 / span 1 / -1;
     min-width: 1160px;
 }
 
-.small-section-title {
-    /* border: 1px solid white; */
 
+.in-theatres {
+    margin-top: 40px;
+    grid-area: 2 / 1 / span 1 / -1;
+}
+
+.small-section-title {
+    margin-bottom: 6px;
     font-size: 1.5rem;
     font-weight: bold;
-    padding: 6px;
+    padding: 6px 0;
 }
 
 .small-section-title::before {
@@ -406,25 +401,43 @@ section {
     margin-right: 8px;
 }
 
-.it-movie-cards-container {
-    /* border: 1px solid yellow; */
-
-    height: 90%;
-
-    display: flex;
+.in-theatres-section-title {
+    color: rgb(245 197 25);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 6px;
 }
 
-.it-movie-card {
+.small-section-subtitle {    
+    color: #FFFFFFB3;
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+
+.in-theatres-movie-cards-container,
+.upcoming-movie-cards-container,
+.top-rated-movie-cards-container {
+    border: 1px solid red;
+
+    height: 90%;
+    display: flex;
+
+    /* margin: 30px 0; */
+}
+
+.movie-card {
     background-color: rgb(26 26 26);
-
-    /* border: 1px solid white; */
-
     flex: 1;
     margin: 0 10px;
 }
 
 .card-poster-container {
     cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+.card-poster-container:hover {
+    filter: brightness(0.9);
 }
 
 .card-text-container {
@@ -434,25 +447,27 @@ section {
 }
 
 .rating-container,
-.it-title {
+.movie-card-title {
     margin: 0 8px;
 }
 
-.it-title:hover {
+.movie-card-title:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
 svg.star-icon {
     fill: rgb(245 197 25);
+    margin-right: 4px;
 }
 
-.it-first-rating {
+.movie-card-rating {
     font-size: 1.1rem;
     color: #FFFFFFB3;
 }
 
-.it-first-title {
+.movie-card-title {
+    height: 40px;
     margin-top: 10px;
 }
 
@@ -498,31 +513,19 @@ button > svg {
 }
 
 
-
-
-
-
-
 .upcoming {
-    border: 1px solid white;
-
-    /* background-color: deeppink; */
-
     grid-area: 3 / 1 / span 1 / -1;
 }
 
 .top-rated {
-    border: 1px solid white;
-
-    /* background-color: lightseagreen; */
     grid-area: 4 / 1 / span 1 / -1;
 }
 
 .people-trending {
-    border: 1px solid white;
-
-    /* background-color: orange; */
+    border: 1px solid deeppink;
     grid-area: 5 / 1 / span 1 / -1;
+
+    margin: 30px 0;
 }
 
 footer {
