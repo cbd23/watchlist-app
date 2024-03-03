@@ -54,3 +54,14 @@ export const popularElements = {
   popFourTitle,
   popFourGenres
 }
+
+// create 'movie cards container' elements for the first three small sections
+const inTheatresMovieCardsContainer = document.querySelector('.in-theatres-movie-cards-container')
+const upcomingMovieCardsContainer = document.querySelector('.upcoming-movie-cards-container')
+const topRatedMovieCardsContainer = document.querySelector('.top-rated-movie-cards-container')
+
+export const movieCardsContainers = {
+  inTheatresMovieCardsContainer,
+  upcomingMovieCardsContainer,
+  topRatedMovieCardsContainer
+}
