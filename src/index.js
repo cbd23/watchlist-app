@@ -427,3 +427,33 @@ getTopRated(TOP_RATED_URL, OPTIONS)
 // }
 
 // getMovieCredits(787699, OPTIONS)
+
+// GET the TRAILER for a movie using movie_id
+async function getMovieTrailer (url, options) {
+  try {
+    const response = await fetch(url, options)
+
+    if (response.status === 200) {
+      const data = await response.json()
+
+      console.log('MOVIE TRAILER TEST: ')
+      console.log(data)
+    } else {
+      console.log('There was a problem with the request.')
+    }
+  } catch (error) {
+    console.log('Error: ', error)
+  }
+}
+
+// movie_id for 'No Way Up' - for testing purposes
+const movie_id = 1096197
+const MOVIE_TRAILER_URL = BASE_URL + `/movie/${movie_id}/videos?language=en-US`
+
+getMovieTrailer(MOVIE_TRAILER_URL, OPTIONS)
+
+// key received in object --- UJa1zUYegqo
+
+// valid YouTube link using the key: https://www.youtube.com/watch?v=UJa1zUYegqo
+
+// this will be opened with taget = "_blank" on an <a> element that has href ="https://www.youtube.com/watch?v=UJa1zUYegqo"
