@@ -17,21 +17,47 @@ const OPTIONS = {
 
 // SEARCH URLs
 
-let searchTerm
+// let searchTerm
 
-// MULTI: search for movies, TV shows and people in a single request
-const SEARCH_MULTI_URL = BASE_URL + `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+// perform a search using the searchbar
+async function searchIMDb (url, options) {
+  try {
+    const response = await fetch(url, options)
 
-// MOVIE: search for for movies by their original, translated and alternative titles
-const SEARCH_MOVIE_URL = BASE_URL + `/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+    if (response.status === 200) {
+      const data = await response.json()
 
-// PERSON: search for people by their name and also 'known as' names
-const SEARCH_PERSON_URL = BASE_URL + `/search/person?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+      console.log('SEARCH RESULTS: ')
+      console.log(data)
+    } else {
+      console.log('There was a problem with the request.')
+    }
+  } catch (error) {
+    console.log('Error: ', error)
+  }
+}
 
-// KEYWORD: search using keywords
-const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+buttons.searchBar.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    const searchTerm = buttons.searchBar.value
 
+    // MULTI: search for movies, TV shows and people in a single request
+    const SEARCH_MULTI_URL = BASE_URL + `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
+    // MOVIE: search for for movies by their original, translated and alternative titles
+    const SEARCH_MOVIE_URL = BASE_URL + `/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+    // PERSON: search for people by their name and also 'known as' names
+    const SEARCH_PERSON_URL = BASE_URL + `/search/person?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+    // KEYWORD: search using keywords
+    const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+    searchIMDb(SEARCH_MULTI_URL, OPTIONS)
+    console.log('searchTerm = ' + searchTerm)
+    buttons.searchBar.value = ''
+  }
+})
 
 //
 // MOVIE LISTS URLs:
