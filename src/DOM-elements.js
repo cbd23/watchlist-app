@@ -55,7 +55,7 @@ export const popularElements = {
   popFourGenres
 }
 
-// create 'movie cards container' elements for the first three small sections
+// store 'movie cards container' elements for the first three small sections
 const inTheatresMovieCardsContainer = document.querySelector('.in-theatres-movie-cards-container')
 const upcomingMovieCardsContainer = document.querySelector('.upcoming-movie-cards-container')
 const topRatedMovieCardsContainer = document.querySelector('.top-rated-movie-cards-container')
@@ -65,3 +65,6 @@ export const movieCardsContainers = {
   upcomingMovieCardsContainer,
   topRatedMovieCardsContainer
 }
+
+// store the 'trending-people-cards-container' element from the 'Trending people' section
+export const trendingPeopleCardsContainer = document.querySelector('.trending-people-cards-container')
