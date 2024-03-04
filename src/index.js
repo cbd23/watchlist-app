@@ -1,5 +1,5 @@
 import './style.css'
-import { buttons, popularElements, movieCardsContainers } from './DOM-elements.js'
+import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer } from './DOM-elements.js'
 import { genreData } from './genre-data.js'
 import { API_KEY } from './cred'
 
@@ -68,7 +68,7 @@ const TRENDING_PEOPLE_URL = BASE_URL + '/trending/person/week?language=en-US'
 // const PERSON_IMAGE_URL = BASE_URL + `/person/${PERSON_ID}/images`
 
 // GET the poster image or the backdrop image for a MOVIE
-const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/original'
+const IMAGE_URL = 'https://image.tmdb.org/t/p/original'
 
 // create a fn that takes a genreId as an arg and returns the genre's name
 // this uses the genreData arr from our 'genre-data.js' module
@@ -106,7 +106,7 @@ async function getUpcomingMovies (url, options) {
         cardPoster.classList.add('card-poster')
         cardPoster.alt = 'movie-poster'
         cardPoster.width = '190'
-        cardPoster.src = `${MOVIE_IMAGE_URL + movie.poster_path}`
+        cardPoster.src = `${IMAGE_URL + movie.poster_path}`
 
         cardPosterContainer.appendChild(cardPoster)
 
@@ -185,7 +185,7 @@ async function getNowPlayingMovies (url, options) {
         cardPoster.classList.add('card-poster')
         cardPoster.alt = 'movie-poster'
         cardPoster.width = '190'
-        cardPoster.src = `${MOVIE_IMAGE_URL + movie.poster_path}`
+        cardPoster.src = `${IMAGE_URL + movie.poster_path}`
 
         cardPosterContainer.appendChild(cardPoster)
 
@@ -253,8 +253,8 @@ async function getPopularMovies (url, options) {
       console.log(popularMoviesArr)
 
       // update info about THE MOST POPULAR movie
-      popularElements.mainPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[0].poster_path
-      popularElements.mainImage.src = MOVIE_IMAGE_URL + popularMoviesArr[0].backdrop_path
+      popularElements.mainPoster.src = IMAGE_URL + popularMoviesArr[0].poster_path
+      popularElements.mainImage.src = IMAGE_URL + popularMoviesArr[0].backdrop_path
       popularElements.mainTitle.innerText = popularMoviesArr[0].title
       popularElements.mainOverview.innerText = popularMoviesArr[0].overview
 
@@ -272,7 +272,7 @@ async function getPopularMovies (url, options) {
       })
 
       // repeat for the SECOND MOST POPULAR movie
-      popularElements.secondPopPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[1].poster_path
+      popularElements.secondPopPoster.src = IMAGE_URL + popularMoviesArr[1].poster_path
       popularElements.popTwoTitle.innerText = popularMoviesArr[1].title
 
       let secondPopMovieGenresArr = []
@@ -292,7 +292,7 @@ async function getPopularMovies (url, options) {
       })
 
       // repeat for the THIRD MOST POPULAR movie
-      popularElements.thirdPopPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[2].poster_path
+      popularElements.thirdPopPoster.src = IMAGE_URL + popularMoviesArr[2].poster_path
       popularElements.popThreeTitle.innerText = popularMoviesArr[2].title
 
       let thirdPopMovieGenresArr = []
@@ -311,7 +311,7 @@ async function getPopularMovies (url, options) {
       })
 
       // repeat for the FOURTH MOST POPULAR movie
-      popularElements.fourthPopPoster.src = MOVIE_IMAGE_URL + popularMoviesArr[3].poster_path
+      popularElements.fourthPopPoster.src = IMAGE_URL + popularMoviesArr[3].poster_path
       popularElements.popFourTitle.innerText = popularMoviesArr[3].title
 
       let fourthPopMovieGenresArr = []
@@ -366,7 +366,7 @@ async function getTopRated (url, options) {
         cardPoster.classList.add('card-poster')
         cardPoster.alt = 'movie-poster'
         cardPoster.width = '190'
-        cardPoster.src = `${MOVIE_IMAGE_URL + movie.poster_path}`
+        cardPoster.src = `${IMAGE_URL + movie.poster_path}`
 
         cardPosterContainer.appendChild(cardPoster)
 
@@ -418,14 +418,43 @@ getTopRated(TOP_RATED_URL, OPTIONS)
 
 // GET TRENDING PEOPLE for the 'TRENDING THIS WEEK' section
 async function getTrendingPeople (url, options) {
+  // create an arr that'll store the people
+  const trendingPeopleArr = []
+
   try {
     const response = await fetch(url, options)
 
     if (response.status === 200) {
       const data = await response.json()
 
+      // push the people that we'll display into an arr
+      trendingPeopleArr.push(data.results[2], data.results[3], data.results[4], data.results[5], data.results[6])
+
       console.log('TRENDING PEOPLE TODAY LIST: ')
-      console.log(data)
+      console.log(trendingPeopleArr)
+
+      trendingPeopleArr.forEach(person => {
+        const trendingPersonCard = document.createElement('div')
+        trendingPersonCard.classList.add('trending-person-card')
+
+        const profilePictureContainer = document.createElement('div')
+        profilePictureContainer.classList.add('profile-picture-container')
+
+        const profilePicture = document.createElement('img')
+        profilePicture.alt = 'avatar'
+        profilePicture.width = '190'
+        profilePicture.src = IMAGE_URL + person.profile_path
+
+        const trendingPersonName = document.createElement('div')
+        trendingPersonName.classList.add('trending-person-name')
+        trendingPersonName.innerText = person.name
+
+        profilePictureContainer.appendChild(profilePicture)
+        trendingPersonCard.appendChild(profilePictureContainer)
+        trendingPersonCard.appendChild(trendingPersonName)
+
+        trendingPeopleCardsContainer.appendChild(trendingPersonCard)
+      })
     } else {
       console.log('There was a problem with the request.')
     }
@@ -435,11 +464,12 @@ async function getTrendingPeople (url, options) {
 }
 getTrendingPeople(TRENDING_PEOPLE_URL, OPTIONS)
 
+// GET someone's PROFILE IMAGE
+
 const PERSON_ID = 500
 
 const PERSON_IMAGE_URL = BASE_URL + `/person/${PERSON_ID}/images`
 
-// GET someone's PROFILE IMAGE
 async function getPeopleImage (url, options) {
   try {
     const response = await fetch(url, options)
