@@ -40,6 +40,7 @@ async function getMovie (url) {
 
 // getMovie(`${SEARCH_MULTI_URL}query=${SEARCH_TERM}&api_key=${API_KEY}`)
 
+//
 // MOVIE LISTS URLs:
 
 // GET a list of movies ordered by popularity
@@ -54,8 +55,17 @@ const UPCOMING_URL = BASE_URL + '/movie/upcoming?language=en-US&page=1'
 // GET a list of movies ordered by rating
 const TOP_RATED_URL = BASE_URL + '/movie/top_rated?language=en-US&page=1'
 
-// GET a list of actors playing in a movie
-// const MOVIE_CREDITS_URL
+//
+// PEOPLE LIST URL:
+
+// GET a list of trending people
+const TRENDING_PEOPLE_URL = BASE_URL + '/trending/person/week?language=en-US'
+
+//
+// IMAGES URLs
+
+// GET the profile image that belongs to a person
+// const PERSON_IMAGE_URL = BASE_URL + `/person/${PERSON_ID}/images`
 
 // GET the poster image or the backdrop image for a MOVIE
 const MOVIE_IMAGE_URL = 'https://image.tmdb.org/t/p/original'
@@ -144,7 +154,6 @@ async function getUpcomingMovies (url, options) {
     console.log('Error: ', error)
   }
 }
-
 getUpcomingMovies(UPCOMING_URL, OPTIONS)
 
 // GET the needed movies for the 'IN THEATRES' section
@@ -224,7 +233,6 @@ async function getNowPlayingMovies (url, options) {
     console.log('Error: ', error)
   }
 }
-
 getNowPlayingMovies(NOW_PLAYING_URL, OPTIONS)
 
 // GET the needed movies for the 'POPULAR' section
@@ -327,7 +335,6 @@ async function getPopularMovies (url, options) {
     console.log('Error: ', error)
   }
 }
-
 getPopularMovies(POPULAR_URL, OPTIONS)
 
 // GET the needed movies for the 'TOP RATED' section
@@ -407,26 +414,49 @@ async function getTopRated (url, options) {
     console.log('Error: ', error)
   }
 }
-
 getTopRated(TOP_RATED_URL, OPTIONS)
 
-// GET 'MOVIE CREDITS'
-// async function getMovieCredits (id, options) {
-//   try {
-//     const response = await fetch(BASE_URL + `/movie/${id}/credits`, options)
+// GET TRENDING PEOPLE for the 'TRENDING THIS WEEK' section
+async function getTrendingPeople (url, options) {
+  try {
+    const response = await fetch(url, options)
 
-//     if (response.status === 200) {
-//       const data = await response.json()
-//       console.log(data)
-//     } else {
-//       console.log('There was a problem with the request.')
-//     }
-//   } catch (error) {
-//     console.log('Error: ', error)
-//   }
-// }
+    if (response.status === 200) {
+      const data = await response.json()
 
-// getMovieCredits(787699, OPTIONS)
+      console.log('TRENDING PEOPLE TODAY LIST: ')
+      console.log(data)
+    } else {
+      console.log('There was a problem with the request.')
+    }
+  } catch (error) {
+    console.log('Error: ', error)
+  }
+}
+getTrendingPeople(TRENDING_PEOPLE_URL, OPTIONS)
+
+const PERSON_ID = 500
+
+const PERSON_IMAGE_URL = BASE_URL + `/person/${PERSON_ID}/images`
+
+// GET someone's PROFILE IMAGE
+async function getPeopleImage (url, options) {
+  try {
+    const response = await fetch(url, options)
+
+    if (response.status === 200) {
+      const data = await response.json()
+
+      console.log('PERSON PROFILE IMAGE: ')
+      console.log(data)
+    } else {
+      console.log('There was a problem with the request.')
+    }
+  } catch (error) {
+    console.log('Error: ', error)
+  }
+}
+getPeopleImage(PERSON_IMAGE_URL, OPTIONS)
 
 // GET the TRAILER for a movie using movie_id
 async function getMovieTrailer (url, options) {
@@ -447,13 +477,29 @@ async function getMovieTrailer (url, options) {
 }
 
 // movie_id for 'No Way Up' - for testing purposes
-const movie_id = 1096197
-const MOVIE_TRAILER_URL = BASE_URL + `/movie/${movie_id}/videos?language=en-US`
+const MOVIE_ID = 1096197
+const MOVIE_TRAILER_URL = BASE_URL + `/movie/${MOVIE_ID}/videos?language=en-US`
 
 getMovieTrailer(MOVIE_TRAILER_URL, OPTIONS)
 
 // key received in object --- UJa1zUYegqo
-
 // valid YouTube link using the key: https://www.youtube.com/watch?v=UJa1zUYegqo
-
 // this will be opened with taget = "_blank" on an <a> element that has href ="https://www.youtube.com/watch?v=UJa1zUYegqo"
+
+// GET 'MOVIE CREDITS' ########################################################################################################
+// async function getMovieCredits (id, options) {
+//   try {
+//     const response = await fetch(BASE_URL + `/movie/${id}/credits`, options)
+
+//     if (response.status === 200) {
+//       const data = await response.json()
+//       console.log(data)
+//     } else {
+//       console.log('There was a problem with the request.')
+//     }
+//   } catch (error) {
+//     console.log('Error: ', error)
+//   }
+// }
+
+// getMovieCredits(787699, OPTIONS)
