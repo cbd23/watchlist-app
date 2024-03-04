@@ -62,12 +62,7 @@ const TOP_RATED_URL = BASE_URL + '/movie/top_rated?language=en-US&page=1'
 const TRENDING_PEOPLE_URL = BASE_URL + '/trending/person/week?language=en-US'
 
 //
-// IMAGES URLs
-
-// GET the profile image that belongs to a person
-// const PERSON_IMAGE_URL = BASE_URL + `/person/${PERSON_ID}/images`
-
-// GET the poster image or the backdrop image for a MOVIE
+// Use IMAGE_URL as a base URL to GET the poster/backdrop image of a MOVIE or the profile image of a PERSON
 const IMAGE_URL = 'https://image.tmdb.org/t/p/original'
 
 // create a fn that takes a genreId as an arg and returns the genre's name
@@ -135,18 +130,14 @@ async function getUpcomingMovies (url, options) {
 
         // append the elements
         ratingContainer.appendChild(movieCardRating)
-
         cardTextContainer.appendChild(ratingContainer)
         cardTextContainer.appendChild(movieCardTitle)
         cardTextContainer.appendChild(addToWatchlistBtn)
         cardTextContainer.appendChild(trailerBtn)
-
         movieCard.appendChild(cardPosterContainer)
         movieCard.appendChild(cardTextContainer)
-
         movieCardsContainers.upcomingMovieCardsContainer.appendChild(movieCard)
       })
-      console.log(data)
     } else {
       console.log('There was a problem with the request.')
     }
@@ -214,18 +205,14 @@ async function getNowPlayingMovies (url, options) {
 
         // append the elements
         ratingContainer.appendChild(movieCardRating)
-
         cardTextContainer.appendChild(ratingContainer)
         cardTextContainer.appendChild(movieCardTitle)
         cardTextContainer.appendChild(addToWatchlistBtn)
         cardTextContainer.appendChild(trailerBtn)
-
         movieCard.appendChild(cardPosterContainer)
         movieCard.appendChild(cardTextContainer)
-
         movieCardsContainers.inTheatresMovieCardsContainer.appendChild(movieCard)
       })
-      console.log(data)
     } else {
       console.log('There was a problem with the request.')
     }
@@ -306,7 +293,6 @@ async function getPopularMovies (url, options) {
         if (index !== thirdPopMovieGenresArr.length - 1) {
           popThreeMovieGenre.innerText += ' / '
         }
-
         popularElements.popThreeGenres.appendChild(popThreeMovieGenre)
       })
 
@@ -325,7 +311,6 @@ async function getPopularMovies (url, options) {
         if (index !== fourthPopMovieGenresArr.length - 1) {
           popFourMovieGenre.innerText += ' / '
         }
-
         popularElements.popFourGenres.appendChild(popFourMovieGenre)
       })
     } else {
@@ -395,18 +380,14 @@ async function getTopRated (url, options) {
 
         // append the elements
         ratingContainer.appendChild(movieCardRating)
-
         cardTextContainer.appendChild(ratingContainer)
         cardTextContainer.appendChild(movieCardTitle)
         cardTextContainer.appendChild(addToWatchlistBtn)
         cardTextContainer.appendChild(trailerBtn)
-
         movieCard.appendChild(cardPosterContainer)
         movieCard.appendChild(cardTextContainer)
-
         movieCardsContainers.topRatedMovieCardsContainer.appendChild(movieCard)
       })
-      console.log(data)
     } else {
       console.log('There was a problem with the request.')
     }
