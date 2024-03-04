@@ -414,15 +414,19 @@ section {
     font-size: 1rem;
 }
 
+.in-theatres-section-title,
+.small-section-title,
+.small-section-subtitle {
+    padding: 0 10px;
+}
+
 .in-theatres-movie-cards-container,
 .upcoming-movie-cards-container,
 .top-rated-movie-cards-container {
-    border: 1px solid red;
+    /* border: 1px solid red; */
 
     height: 90%;
     display: flex;
-
-    /* margin: 30px 0; */
 }
 
 .movie-card {
@@ -512,9 +516,12 @@ button > svg {
     margin-right: 4px;
 }
 
-
 .upcoming {
     grid-area: 3 / 1 / span 1 / -1;
+}
+
+.upcoming-section-title {
+    margin: 8px 0;
 }
 
 .top-rated {
@@ -522,17 +529,50 @@ button > svg {
 }
 
 .people-trending {
-    border: 1px solid deeppink;
+    height: 400px;
     grid-area: 5 / 1 / span 1 / -1;
+    margin: 40px 0;
+}
 
-    margin: 30px 0;
+.trending-people-cards-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.trending-person-card {
+    margin: 20px;
+    cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+.trending-person-card:hover {
+    filter: brightness(0.7);
+}
+
+.profile-picture-container {
+    width: 190px;
+    height: 190px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .profile-picture-container img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: -15px;
+    left: 0;
+  }
+
+.trending-person-name {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 12px;
 }
 
 footer {
     border: 1px solid blue;
-
-    background-color: grey;
-
     grid-area: 3 / 1 / span 1 / -1;
     color: white;
 }
