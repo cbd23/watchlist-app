@@ -17,28 +17,21 @@ const OPTIONS = {
 
 // SEARCH URLs
 
-// MULTI: search for movies, TV shows and people in a single request.
-const SEARCH_MULTI_URL = BASE_URL + '/search/multi?'
+let searchTerm
 
-// default SEARCH term
-const SEARCH_TERM = 'Allied'
+// MULTI: search for movies, TV shows and people in a single request
+const SEARCH_MULTI_URL = BASE_URL + `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
-async function getMovie (url) {
-  try {
-    const response = await fetch(url)
+// MOVIE: search for for movies by their original, translated and alternative titles
+const SEARCH_MOVIE_URL = BASE_URL + `/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
-    if (response.status === 200) {
-      const data = await response.json()
-      console.log(data)
-    } else {
-      console.log('There was a problem with the request.')
-    }
-  } catch (error) {
-    console.log('Error: ', error)
-  }
-}
+// PERSON: search for people by their name and also 'known as' names
+const SEARCH_PERSON_URL = BASE_URL + `/search/person?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
-// getMovie(`${SEARCH_MULTI_URL}query=${SEARCH_TERM}&api_key=${API_KEY}`)
+// KEYWORD: search using keywords
+const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+
 
 //
 // MOVIE LISTS URLs:
