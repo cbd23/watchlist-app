@@ -3,14 +3,14 @@
 const homeBtn = document.querySelector('.logo-container')
 const menuBtn = document.querySelector('.menu-container')
 const searchFilterBtn = document.querySelector('.search-filter-container')
-const searchBarBtn = document.getElementById('searchbar')
+const searchBar = document.getElementById('searchbar')
 const searchIconBtn = document.querySelector('.search-icon-container')
 
 export const buttons = {
   homeBtn,
   menuBtn,
   searchFilterBtn,
-  searchBarBtn,
+  searchBar,
   searchIconBtn
 }
 
