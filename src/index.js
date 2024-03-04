@@ -464,30 +464,6 @@ async function getTrendingPeople (url, options) {
 }
 getTrendingPeople(TRENDING_PEOPLE_URL, OPTIONS)
 
-// GET someone's PROFILE IMAGE
-
-const PERSON_ID = 500
-
-const PERSON_IMAGE_URL = BASE_URL + `/person/${PERSON_ID}/images`
-
-async function getPeopleImage (url, options) {
-  try {
-    const response = await fetch(url, options)
-
-    if (response.status === 200) {
-      const data = await response.json()
-
-      console.log('PERSON PROFILE IMAGE: ')
-      console.log(data)
-    } else {
-      console.log('There was a problem with the request.')
-    }
-  } catch (error) {
-    console.log('Error: ', error)
-  }
-}
-getPeopleImage(PERSON_IMAGE_URL, OPTIONS)
-
 // GET the TRAILER for a movie using movie_id
 async function getMovieTrailer (url, options) {
   try {
