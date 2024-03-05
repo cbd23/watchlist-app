@@ -1,5 +1,15 @@
-// BUTTONS:
+// direct children of the body element:
+const header = document.querySelector('header')
+const main = document.querySelector('main')
+const footer = document.querySelector('footer')
 
+export const bodyChildren = {
+  header,
+  main,
+  footer
+}
+
+// BUTTONS:
 const homeBtn = document.querySelector('.logo-container')
 const menuBtn = document.querySelector('.menu-container')
 const searchFilterBtn = document.querySelector('.search-filter-container')
@@ -15,7 +25,7 @@ export const buttons = {
 }
 
 // POPULAR section elements:
-
+//
 // for the MAIN movie
 const mainPoster = document.querySelector('.main-poster')
 const mainImage = document.querySelector('.popular-main-image')
