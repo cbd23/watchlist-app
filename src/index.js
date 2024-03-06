@@ -1,5 +1,5 @@
 import './style.css'
-import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer } from './DOM-elements.js'
+import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer, bodyChildren } from './DOM-elements.js'
 import { genreData } from './genre-data.js'
 import { API_KEY } from './cred'
 
@@ -21,14 +21,90 @@ const OPTIONS = {
 
 // perform a search using the searchbar
 async function searchIMDb (url, options) {
+// create an arr that'll store the first five results
+  const searchIMDbArr = []
+
   try {
     const response = await fetch(url, options)
 
     if (response.status === 200) {
       const data = await response.json()
 
+      searchIMDbArr.push(data.results[0], data.results[1], data.results[2], data.results[4], data.results[5])
+
+      // start creating needed elements before 'search-result'
+      const mainSearchPerformed = document.createElement('main')
+      mainSearchPerformed.classList.add('search-performed')
+
+      const searchTermDisplayed = document.createElement('div')
+      searchTermDisplayed.classList.add('search-term-displayed')
+      searchTermDisplayed.innerText = 'Search "inception"'
+
+      const searchResultsContainer = document.createElement('div')
+      searchResultsContainer.classList.add('search-results-container')
+
+      const selectedFilterName = document.createElement('div')
+      selectedFilterName.classList.add('selected-filter-name')
+      selectedFilterName.innerText = 'Movies'
+
+      const resultsBoxContainer = document.createElement('div')
+      resultsBoxContainer.classList.add('results-box-container')
+
+      const resultsBox = document.createElement('div')
+      resultsBox.classList.add('results-box')
+
+      // create the SEARCH RESULT element
+
+      searchIMDbArr.forEach(result => {
+        const searchResult = document.createElement('div')
+        searchResult.classList.add('search-result')
+
+        const searchResultPosterContainer = document.createElement('div')
+        searchResultPosterContainer.classList.add('search-result-poster-container')
+
+        const searchResultPoster = document.createElement('img')
+        searchResultPoster.classList.add('search-result-poster')
+        searchResultPoster.height = '75'
+        searchResultPoster.alt = 'movie poster'
+        searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
+
+        const searchResultTextContainer = document.createElement('div')
+        searchResultTextContainer.classList.add('search-result-text-container')
+
+        const searchResultTitle = document.createElement('div')
+        searchResultTitle.classList.add('search-result-title')
+        searchResultTitle.innerText = result.title
+
+        const searchResultYear = document.createElement('div')
+        searchResultYear.classList.add('search-result-year')
+        searchResultYear.innerText = result.release_date
+
+        const searchResultCast = document.createElement('div')
+        searchResultCast.classList.add('search-result-cast')
+        searchResultCast.innerText = 'TBD calling getMovieCredits()'
+
+        // append the elements
+        searchResultPosterContainer.appendChild(searchResultPoster)
+
+        searchResultTextContainer.append(searchResultTitle, searchResultYear, searchResultCast)
+
+        searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+
+        resultsBox.appendChild(searchResult)
+      })
+
+      resultsBoxContainer.appendChild(resultsBox)
+
+      searchResultsContainer.append(selectedFilterName, resultsBoxContainer)
+
+      mainSearchPerformed.append(searchTermDisplayed, searchResultsContainer)
+
+      document.querySelector('body').removeChild(bodyChildren.main)
+      document.querySelector('body').insertBefore(mainSearchPerformed, bodyChildren.footer)
+      document.querySelector('html').style.backgroundColor = '#fafafa'
+
       console.log('SEARCH RESULTS: ')
-      console.log(data)
+      console.log(searchIMDbArr)
     } else {
       console.log('There was a problem with the request.')
     }
@@ -164,7 +240,6 @@ async function getUpcomingMovies (url, options) {
     console.log('Error: ', error)
   }
 }
-getUpcomingMovies(UPCOMING_URL, OPTIONS)
 
 // GET the needed movies for the 'IN THEATRES' section
 async function getNowPlayingMovies (url, options) {
@@ -239,7 +314,6 @@ async function getNowPlayingMovies (url, options) {
     console.log('Error: ', error)
   }
 }
-getNowPlayingMovies(NOW_PLAYING_URL, OPTIONS)
 
 // GET the needed movies for the 'POPULAR' section
 async function getPopularMovies (url, options) {
@@ -339,7 +413,6 @@ async function getPopularMovies (url, options) {
     console.log('Error: ', error)
   }
 }
-getPopularMovies(POPULAR_URL, OPTIONS)
 
 // GET the needed movies for the 'TOP RATED' section
 async function getTopRated (url, options) {
@@ -414,7 +487,6 @@ async function getTopRated (url, options) {
     console.log('Error: ', error)
   }
 }
-getTopRated(TOP_RATED_URL, OPTIONS)
 
 // GET TRENDING PEOPLE for the 'TRENDING THIS WEEK' section
 async function getTrendingPeople (url, options) {
@@ -462,7 +534,6 @@ async function getTrendingPeople (url, options) {
     console.log('Error: ', error)
   }
 }
-getTrendingPeople(TRENDING_PEOPLE_URL, OPTIONS)
 
 // GET the TRAILER for a movie using movie_id
 async function getMovieTrailer (url, options) {
@@ -486,7 +557,7 @@ async function getMovieTrailer (url, options) {
 const MOVIE_ID = 1096197
 const MOVIE_TRAILER_URL = BASE_URL + `/movie/${MOVIE_ID}/videos?language=en-US`
 
-getMovieTrailer(MOVIE_TRAILER_URL, OPTIONS)
+// getMovieTrailer(MOVIE_TRAILER_URL, OPTIONS)
 
 // key received in object --- UJa1zUYegqo
 // valid YouTube link using the key: https://www.youtube.com/watch?v=UJa1zUYegqo
@@ -509,3 +580,13 @@ getMovieTrailer(MOVIE_TRAILER_URL, OPTIONS)
 // }
 
 // getMovieCredits(787699, OPTIONS)
+
+function makeRequestsAtStart () {
+  getPopularMovies(POPULAR_URL, OPTIONS)
+  getNowPlayingMovies(NOW_PLAYING_URL, OPTIONS)
+  getUpcomingMovies(UPCOMING_URL, OPTIONS)
+  getTopRated(TOP_RATED_URL, OPTIONS)
+  getTrendingPeople(TRENDING_PEOPLE_URL, OPTIONS)
+}
+
+makeRequestsAtStart()
