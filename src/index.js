@@ -99,7 +99,19 @@ async function searchIMDb (url, options) {
 
       mainSearchPerformed.append(searchTermDisplayed, searchResultsContainer)
 
-      document.querySelector('body').removeChild(bodyChildren.main)
+      // Get the existing main element
+      const existingMain = document.querySelector('main')
+
+      // Check if there was at least one search performed
+      const isSearchPerformed = existingMain && existingMain.classList.contains('search-performed')
+
+      // Remove the existing main element based on the condition
+      if (isSearchPerformed) {
+        existingMain.parentNode.removeChild(existingMain)
+      } else if (existingMain) {
+        document.body.removeChild(existingMain)
+      }
+
       document.querySelector('body').insertBefore(mainSearchPerformed, bodyChildren.footer)
       document.querySelector('html').style.backgroundColor = '#fafafa'
 
