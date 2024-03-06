@@ -77,7 +77,7 @@ async function searchIMDb (url, options) {
 
         const searchResultYear = document.createElement('div')
         searchResultYear.classList.add('search-result-year')
-        searchResultYear.innerText = result.release_date
+        searchResultYear.innerText = result.release_date.slice(0, 4)
 
         const searchResultCast = document.createElement('div')
         searchResultCast.classList.add('search-result-cast')
