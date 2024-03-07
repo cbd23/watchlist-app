@@ -15,9 +15,28 @@ const OPTIONS = {
   }
 }
 
-// SEARCH URLs
+// create a fn that will run when the user presses 'Enter' or clicks on the 'search' icon
+function handleSearch () {
+  const searchTerm = buttons.searchBar.value
 
-// let searchTerm
+  // SEARCH URLs
+  //
+  // MULTI: search for movies, TV shows and people in a single request
+  const SEARCH_MULTI_URL = BASE_URL + `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+  // MOVIE: search for for movies by their original, translated and alternative titles
+  const SEARCH_MOVIE_URL = BASE_URL + `/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+  // PERSON: search for people by their name and also 'known as' names
+  const SEARCH_PERSON_URL = BASE_URL + `/search/person?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+  // KEYWORD: search using keywords
+  const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
+
+  searchIMDb(SEARCH_MULTI_URL, OPTIONS, searchTerm)
+  console.log('searchTerm = ' + searchTerm)
+  buttons.searchBar.value = ''
+}
 
 // perform a search using the searchbar
 async function searchIMDb (url, options, searchTerm) {
@@ -31,7 +50,6 @@ async function searchIMDb (url, options, searchTerm) {
       const data = await response.json()
 
       searchIMDbArr.push(data.results[0], data.results[1], data.results[2], data.results[3], data.results[4])
-      console.log(searchIMDbArr)
 
       // start creating needed elements before 'search-result'
       const mainSearchPerformed = document.createElement('main')
@@ -131,27 +149,13 @@ async function searchIMDb (url, options, searchTerm) {
   }
 }
 
+// add ev listeners on both the searchBar and the searchIconBtn
 buttons.searchBar.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
-    const searchTerm = buttons.searchBar.value
-
-    // MULTI: search for movies, TV shows and people in a single request
-    const SEARCH_MULTI_URL = BASE_URL + `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
-
-    // MOVIE: search for for movies by their original, translated and alternative titles
-    const SEARCH_MOVIE_URL = BASE_URL + `/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=1`
-
-    // PERSON: search for people by their name and also 'known as' names
-    const SEARCH_PERSON_URL = BASE_URL + `/search/person?query=${searchTerm}&include_adult=false&language=en-US&page=1`
-
-    // KEYWORD: search using keywords
-    const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
-
-    searchIMDb(SEARCH_MULTI_URL, OPTIONS, searchTerm)
-    console.log('searchTerm = ' + searchTerm)
-    buttons.searchBar.value = ''
+    handleSearch()
   }
 })
+buttons.searchIconBtn.addEventListener('pointerdown', handleSearch)
 
 //
 // MOVIE LISTS URLs:
