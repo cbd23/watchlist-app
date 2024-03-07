@@ -20,7 +20,7 @@ const OPTIONS = {
 // let searchTerm
 
 // perform a search using the searchbar
-async function searchIMDb (url, options) {
+async function searchIMDb (url, options, searchTerm) {
 // create an arr that'll store the first five results
   const searchIMDbArr = []
 
@@ -30,7 +30,8 @@ async function searchIMDb (url, options) {
     if (response.status === 200) {
       const data = await response.json()
 
-      searchIMDbArr.push(data.results[0], data.results[1], data.results[2], data.results[4], data.results[5])
+      searchIMDbArr.push(data.results[0], data.results[1], data.results[2], data.results[3], data.results[4])
+      console.log(searchIMDbArr)
 
       // start creating needed elements before 'search-result'
       const mainSearchPerformed = document.createElement('main')
@@ -38,7 +39,7 @@ async function searchIMDb (url, options) {
 
       const searchTermDisplayed = document.createElement('div')
       searchTermDisplayed.classList.add('search-term-displayed')
-      searchTermDisplayed.innerText = 'Search "inception"'
+      searchTermDisplayed.innerText = 'Search ' + `"${searchTerm}"`
 
       const searchResultsContainer = document.createElement('div')
       searchResultsContainer.classList.add('search-results-container')
@@ -54,49 +55,54 @@ async function searchIMDb (url, options) {
       resultsBox.classList.add('results-box')
 
       // create the SEARCH RESULT element
-
       searchIMDbArr.forEach(result => {
-        const searchResult = document.createElement('div')
-        searchResult.classList.add('search-result')
+        if (result !== undefined) {
+          const searchResult = document.createElement('div')
+          searchResult.classList.add('search-result')
 
-        const searchResultPosterContainer = document.createElement('div')
-        searchResultPosterContainer.classList.add('search-result-poster-container')
+          const searchResultPosterContainer = document.createElement('div')
+          searchResultPosterContainer.classList.add('search-result-poster-container')
 
-        const searchResultPoster = document.createElement('img')
-        searchResultPoster.classList.add('search-result-poster')
-        searchResultPoster.height = '75'
-        searchResultPoster.alt = 'movie poster'
-        searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
+          const searchResultPoster = document.createElement('img')
+          searchResultPoster.classList.add('search-result-poster')
+          searchResultPoster.height = '75'
+          searchResultPoster.alt = 'movie poster'
 
-        const searchResultTextContainer = document.createElement('div')
-        searchResultTextContainer.classList.add('search-result-text-container')
+          if (result.poster_path && result.poster_path !== null) {
+            searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
+          }
 
-        const searchResultTitle = document.createElement('div')
-        searchResultTitle.classList.add('search-result-title')
-        searchResultTitle.innerText = result.title
+          const searchResultTextContainer = document.createElement('div')
+          searchResultTextContainer.classList.add('search-result-text-container')
 
-        const searchResultYear = document.createElement('div')
-        searchResultYear.classList.add('search-result-year')
-        searchResultYear.innerText = result.release_date.slice(0, 4)
+          const searchResultTitle = document.createElement('div')
+          searchResultTitle.classList.add('search-result-title')
 
-        const searchResultCast = document.createElement('div')
-        searchResultCast.classList.add('search-result-cast')
-        searchResultCast.innerText = 'TBD calling getMovieCredits()'
+          if (result.title !== undefined && result.title !== null) {
+            searchResultTitle.innerText = result.title
+          }
 
-        // append the elements
-        searchResultPosterContainer.appendChild(searchResultPoster)
+          const searchResultYear = document.createElement('div')
+          searchResultYear.classList.add('search-result-year')
 
-        searchResultTextContainer.append(searchResultTitle, searchResultYear, searchResultCast)
+          if (result.release_date) {
+            searchResultYear.innerText = result.release_date.slice(0, 4)
+          }
 
-        searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+          const searchResultCast = document.createElement('div')
+          searchResultCast.classList.add('search-result-cast')
+          searchResultCast.innerText = 'TBD calling getMovieCredits()'
 
-        resultsBox.appendChild(searchResult)
+          // append the elements
+          searchResultPosterContainer.appendChild(searchResultPoster)
+          searchResultTextContainer.append(searchResultTitle, searchResultYear, searchResultCast)
+          searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+          resultsBox.appendChild(searchResult)
+        }
       })
 
       resultsBoxContainer.appendChild(resultsBox)
-
       searchResultsContainer.append(selectedFilterName, resultsBoxContainer)
-
       mainSearchPerformed.append(searchTermDisplayed, searchResultsContainer)
 
       // Get the existing main element
@@ -141,7 +147,7 @@ buttons.searchBar.addEventListener('keypress', (e) => {
     // KEYWORD: search using keywords
     const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
-    searchIMDb(SEARCH_MULTI_URL, OPTIONS)
+    searchIMDb(SEARCH_MULTI_URL, OPTIONS, searchTerm)
     console.log('searchTerm = ' + searchTerm)
     buttons.searchBar.value = ''
   }
