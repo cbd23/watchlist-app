@@ -15,14 +15,37 @@ const menuBtn = document.querySelector('.menu-container')
 const searchFilterBtn = document.querySelector('.search-filter-container')
 const searchBar = document.getElementById('searchbar')
 const searchIconBtn = document.querySelector('.search-icon-container')
+const dropdownMenuBtn = document.querySelector('.dropdown-menu')
 
 export const buttons = {
   homeBtn,
   menuBtn,
   searchFilterBtn,
   searchBar,
-  searchIconBtn
+  searchIconBtn,
+  dropdownMenuBtn
 }
+
+searchFilterBtn.addEventListener('pointerdown', () => {
+  dropdownMenuBtn.style.display = 'block'
+})
+
+searchFilterBtn.addEventListener('mouseleave', () => {
+  dropdownMenuBtn.style.display = 'none'
+})
+
+dropdownMenuBtn.addEventListener('mouseenter', () => {
+  dropdownMenuBtn.style.display = 'block'
+})
+
+dropdownMenuBtn.addEventListener('mouseleave', () => {
+  dropdownMenuBtn.style.display = 'none'
+})
+
+dropdownMenuBtn.addEventListener('pointerdown', () => {
+  console.log('btn from dropdown was pushed')
+  dropdownMenuBtn.style.display = 'none'
+})
 
 // POPULAR section elements:
 //
