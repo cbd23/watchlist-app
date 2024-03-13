@@ -88,6 +88,8 @@ async function searchIMDb (url, options, searchTerm) {
 
           if (result.poster_path && result.poster_path !== null) {
             searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
+          } else {
+            searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
           }
 
           const searchResultTextContainer = document.createElement('div')
