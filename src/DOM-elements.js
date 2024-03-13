@@ -10,12 +10,21 @@ export const bodyChildren = {
 }
 
 // BUTTONS:
+
+// inside Nav
 const homeBtn = document.querySelector('.logo-container')
 const menuBtn = document.querySelector('.menu-container')
 const searchFilterBtn = document.querySelector('.search-filter-container')
 const searchBar = document.getElementById('searchbar')
 const searchIconBtn = document.querySelector('.search-icon-container')
+const searchFilterText = document.querySelector('.search-filter-text')
 const dropdownMenuBtn = document.querySelector('.dropdown-menu')
+
+// inside dropdown menu
+const allFilterBtn = document.querySelector('.all-filter-btn')
+const moviesFilterBtn = document.querySelector('.movies-filter-btn')
+const celebsFilterBtn = document.querySelector('.celebs-filter-btn')
+const keywordsFilterBtn = document.querySelector('.keywords-filter-btn')
 
 export const buttons = {
   homeBtn,
@@ -23,9 +32,15 @@ export const buttons = {
   searchFilterBtn,
   searchBar,
   searchIconBtn,
-  dropdownMenuBtn
+  searchFilterText,
+  dropdownMenuBtn,
+  allFilterBtn,
+  moviesFilterBtn,
+  celebsFilterBtn,
+  keywordsFilterBtn
 }
 
+// "DISPLAY filters" btns
 searchFilterBtn.addEventListener('pointerdown', () => {
   dropdownMenuBtn.style.display = 'block'
 })
@@ -43,8 +58,42 @@ dropdownMenuBtn.addEventListener('mouseleave', () => {
 })
 
 dropdownMenuBtn.addEventListener('pointerdown', () => {
-  console.log('btn from dropdown was pushed')
   dropdownMenuBtn.style.display = 'none'
+})
+
+// create a variable that stores the selected filter's value (to perform the proper SEARCH)
+let searchType
+console.log(searchType)
+
+// "SELECT filter" btns
+allFilterBtn.addEventListener('pointerdown', () => {
+  console.log('All was pressed')
+
+  searchFilterText.innerText = 'All'
+  searchType = 'all'
+
+  console.log(searchType)
+})
+
+moviesFilterBtn.addEventListener('pointerdown', () => {
+  console.log('Movies was pressed')
+
+  searchFilterText.innerText = 'Movies'
+  searchType = 'movies'
+})
+
+celebsFilterBtn.addEventListener('pointerdown', () => {
+  console.log('Celebs was pressed')
+
+  searchFilterText.innerText = 'Celebs'
+  searchType = 'celebs'
+})
+
+keywordsFilterBtn.addEventListener('pointerdown', () => {
+  console.log('Keywords was pressed')
+
+  searchFilterText.innerText = 'Keywords'
+  searchType = 'keywords'
 })
 
 // POPULAR section elements:
