@@ -677,8 +677,9 @@ button > svg {
     grid-area: 3 / 1 / span 1 / -1;
 }
 
-.upcoming-movie-cards-container .rating-container {
+.upcoming-movie-cards-container .genres-container {
     display: flex;
+    margin: 0 4px;
     gap: 6px;
 }
 
