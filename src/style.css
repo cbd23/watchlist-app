@@ -677,6 +677,19 @@ button > svg {
     grid-area: 3 / 1 / span 1 / -1;
 }
 
+.upcoming-movie-cards-container .rating-container {
+    display: flex;
+    gap: 6px;
+}
+
+.movie-genre {
+    border: 1px solid gray;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    cursor: text;
+}
+
 .upcoming-section-title {
     margin: 8px 0;
 }
