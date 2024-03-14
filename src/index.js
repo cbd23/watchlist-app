@@ -38,7 +38,9 @@ buttons.celebsFilterBtn.addEventListener('pointerdown', () => {
 })
 
 buttons.keywordsFilterBtn.addEventListener('pointerdown', () => {
-  decideSearchType('keywords')
+  // 'Keywords' filter doesn't return much, so there's nothig worth displaying out there, just IDs and names
+  // for this reason, we won't drop this filter option for UI purposes, instead we'll make it behave just like 'All' filter
+  decideSearchType('all')
 })
 
 // create a fn that will run when the user presses 'Enter' or clicks on the 'search' icon
@@ -56,25 +58,15 @@ function handleSearch () {
   // PERSON: search for people by their name and also 'known as' names
   const SEARCH_PERSON_URL = BASE_URL + `/search/person?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
-  // KEYWORD: search using keywords
-  const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
-
   // decide what URL to use when calling searchIMDb, based on the value of 'searchType'
   if (searchType === 'all' || searchType === undefined) {
     searchIMDb(SEARCH_MULTI_URL, OPTIONS, searchTerm, searchType)
-
     console.log('search type performed: ' + searchType)
   } else if (searchType === 'movies') {
     searchIMDb(SEARCH_MOVIE_URL, OPTIONS, searchTerm, searchType)
-
     console.log('search type performed: ' + searchType)
   } else if (searchType === 'celebs') {
     searchIMDb(SEARCH_PERSON_URL, OPTIONS, searchTerm, searchType)
-
-    console.log('search type performed: ' + searchType)
-  } else if (searchType === 'keywords') {
-    searchIMDb(SEARCH_KEYWORD_URL, OPTIONS, searchTerm, searchType)
-
     console.log('search type performed: ' + searchType)
   }
 
@@ -180,7 +172,17 @@ async function searchIMDb (url, options, searchTerm, searchType) {
 
             const searchResultCast = document.createElement('div')
             searchResultCast.classList.add('search-result-cast')
-            searchResultCast.innerText = 'TBD calling getMovieCredits()'
+
+            // display the first 3 actors by calling getMovieCredits() with every result's id
+            async function displayMovieActors (movieID) {
+              try {
+                const movieCast = await getMovieCredits(movieID, OPTIONS)
+                searchResultCast.innerText = movieCast[0] + ', ' + movieCast[1] + ', ' + movieCast[2]
+              } catch (error) {
+                console.log('Error: ', error)
+              }
+            }
+            displayMovieActors(result.id)
 
             // append the elements
             searchResultPosterContainer.appendChild(searchResultPoster)
@@ -237,6 +239,9 @@ async function searchIMDb (url, options, searchTerm, searchType) {
           }
         })
       } else if (searchType === 'movies') {
+        // update filter display
+        selectedFilterName.innerText = 'Movies'
+
         // create the SEARCH RESULT element for MOVIES filter
         searchIMDbArr.forEach(result => {
           if (result !== undefined) {
@@ -276,7 +281,17 @@ async function searchIMDb (url, options, searchTerm, searchType) {
 
             const searchResultCast = document.createElement('div')
             searchResultCast.classList.add('search-result-cast')
-            searchResultCast.innerText = 'TBD calling getMovieCredits()'
+
+            // display the first 3 actors by calling getMovieCredits() with every result's id
+            async function displayMovieActors (movieID) {
+              try {
+                const movieCast = await getMovieCredits(movieID, OPTIONS)
+                searchResultCast.innerText = movieCast[0] + ', ' + movieCast[1] + ', ' + movieCast[2]
+              } catch (error) {
+                console.log('Error: ', error)
+              }
+            }
+            displayMovieActors(result.id)
 
             // append the elements
             searchResultPosterContainer.appendChild(searchResultPoster)
@@ -340,9 +355,6 @@ async function searchIMDb (url, options, searchTerm, searchType) {
             resultsBox.appendChild(searchResult)
           }
         })
-      } else if (searchType === 'keywords') {
-        // 'Keywords' filter doesn't return much, so there's nothig worth displaying out there, just IDs and names
-        // for this reason, we won't drop this filter option for UI purposes, instead we'll make it behave just like 'All' filter
       }
 
       resultsBoxContainer.appendChild(resultsBox)
@@ -748,7 +760,7 @@ async function getTrendingPeople (url, options) {
       const data = await response.json()
 
       // push the people that we'll display into an arr
-      trendingPeopleArr.push(data.results[2], data.results[3], data.results[4], data.results[5], data.results[6])
+      trendingPeopleArr.push(data.results[0], data.results[1], data.results[2], data.results[3], data.results[4])
 
       console.log('TRENDING PEOPLE TODAY LIST: ')
       console.log(trendingPeopleArr)
@@ -811,23 +823,27 @@ const MOVIE_TRAILER_URL = BASE_URL + `/movie/${MOVIE_ID}/videos?language=en-US`
 // valid YouTube link using the key: https://www.youtube.com/watch?v=UJa1zUYegqo
 // this will be opened with taget = "_blank" on an <a> element that has href ="https://www.youtube.com/watch?v=UJa1zUYegqo"
 
-// GET 'MOVIE CREDITS' ########################################################################################################
-// async function getMovieCredits (id, options) {
-//   try {
-//     const response = await fetch(BASE_URL + `/movie/${id}/credits`, options)
+// GET 'MOVIE CREDITS' passing movie_id
+async function getMovieCredits (id, options) {
+  try {
+    const response = await fetch(BASE_URL + `/movie/${id}/credits`, options)
 
-//     if (response.status === 200) {
-//       const data = await response.json()
-//       console.log(data)
-//     } else {
-//       console.log('There was a problem with the request.')
-//     }
-//   } catch (error) {
-//     console.log('Error: ', error)
-//   }
-// }
-
-// getMovieCredits(787699, OPTIONS)
+    if (response.status === 200) {
+      const data = await response.json()
+      const movieCastArr = []
+      if (data.cast) {
+        movieCastArr.push(data.cast[0].name, data.cast[1].name, data.cast[2].name)
+      } else {
+        console.log('Movie cast is smaller than 3.')
+      }
+      return movieCastArr
+    } else {
+      console.log('There was a problem with the request.')
+    }
+  } catch (error) {
+    console.log('Error: ', error)
+  }
+}
 
 function makeRequestsAtStart () {
   getPopularMovies(POPULAR_URL, OPTIONS)
