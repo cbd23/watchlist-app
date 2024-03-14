@@ -1,7 +1,7 @@
 import './style.css'
 import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer, bodyChildren } from './DOM-elements.js'
 import { genreData } from './genre-data.js'
-import { API_KEY } from './cred'
+// import { API_KEY } from './cred'
 
 // store the base url, that'll be used in every request
 const BASE_URL = 'https://api.themoviedb.org/3'
@@ -15,12 +15,38 @@ const OPTIONS = {
   }
 }
 
+// create a variable that will store the SELECTED search type
+let searchType
+
+// create a fn that will modify the value of searchType - this fn is invoked when a search filter is selected
+function decideSearchType (type) {
+  searchType = type
+  console.log('selected search filter: ' + searchType)
+  return searchType
+}
+
+buttons.allFilterBtn.addEventListener('pointerdown', () => {
+  decideSearchType('all')
+})
+
+buttons.moviesFilterBtn.addEventListener('pointerdown', () => {
+  decideSearchType('movies')
+})
+
+buttons.celebsFilterBtn.addEventListener('pointerdown', () => {
+  decideSearchType('celebs')
+})
+
+buttons.keywordsFilterBtn.addEventListener('pointerdown', () => {
+  decideSearchType('keywords')
+})
+
 // create a fn that will run when the user presses 'Enter' or clicks on the 'search' icon
 function handleSearch () {
-  const searchTerm = buttons.searchBar.value
+  const searchTerm = buttons.searchBar.value.trim()
 
   // SEARCH URLs
-  //
+
   // MULTI: search for movies, TV shows and people in a single request
   const SEARCH_MULTI_URL = BASE_URL + `/search/multi?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
@@ -33,14 +59,32 @@ function handleSearch () {
   // KEYWORD: search using keywords
   const SEARCH_KEYWORD_URL = BASE_URL + `/search/keyword?query=${searchTerm}&include_adult=false&language=en-US&page=1`
 
-  searchIMDb(SEARCH_MULTI_URL, OPTIONS, searchTerm)
+  // decide what URL to use when calling searchIMDb, based on the value of 'searchType'
+  if (searchType === 'all' || searchType === undefined) {
+    searchIMDb(SEARCH_MULTI_URL, OPTIONS, searchTerm, searchType)
+
+    console.log('search type performed: ' + searchType)
+  } else if (searchType === 'movies') {
+    searchIMDb(SEARCH_MOVIE_URL, OPTIONS, searchTerm, searchType)
+
+    console.log('search type performed: ' + searchType)
+  } else if (searchType === 'celebs') {
+    searchIMDb(SEARCH_PERSON_URL, OPTIONS, searchTerm, searchType)
+
+    console.log('search type performed: ' + searchType)
+  } else if (searchType === 'keywords') {
+    searchIMDb(SEARCH_KEYWORD_URL, OPTIONS, searchTerm, searchType)
+
+    console.log('search type performed: ' + searchType)
+  }
+
   console.log('searchTerm = ' + searchTerm)
   buttons.searchBar.value = ''
 }
 
 // perform a search using the searchbar
-async function searchIMDb (url, options, searchTerm) {
-// create an arr that'll store the first five results
+async function searchIMDb (url, options, searchTerm, searchType) {
+// create an arr that'll store the results
   const searchIMDbArr = []
 
   try {
@@ -49,7 +93,10 @@ async function searchIMDb (url, options, searchTerm) {
     if (response.status === 200) {
       const data = await response.json()
 
-      searchIMDbArr.push(data.results[0], data.results[1], data.results[2], data.results[3], data.results[4])
+      // we only want the first page, so 20 results is enough
+      for (let i = 0; i <= 19; i++) {
+        searchIMDbArr.push(data.results[i])
+      }
 
       // start creating needed elements before 'search-result'
       const mainSearchPerformed = document.createElement('main')
@@ -64,7 +111,6 @@ async function searchIMDb (url, options, searchTerm) {
 
       const selectedFilterName = document.createElement('div')
       selectedFilterName.classList.add('selected-filter-name')
-      selectedFilterName.innerText = 'Movies'
 
       const resultsBoxContainer = document.createElement('div')
       resultsBoxContainer.classList.add('results-box-container')
@@ -72,54 +118,232 @@ async function searchIMDb (url, options, searchTerm) {
       const resultsBox = document.createElement('div')
       resultsBox.classList.add('results-box')
 
-      // create the SEARCH RESULT element
-      searchIMDbArr.forEach(result => {
-        if (result !== undefined) {
-          const searchResult = document.createElement('div')
-          searchResult.classList.add('search-result')
+      // display the proper MAIN for searches using ALL filter
+      if (searchType === 'all' || searchType === undefined) {
+        // store movie results only into an arr
+        const movieResultsArr = []
 
-          const searchResultPosterContainer = document.createElement('div')
-          searchResultPosterContainer.classList.add('search-result-poster-container')
+        // store people results only into an arr
+        const peopleResultsArr = []
 
-          const searchResultPoster = document.createElement('img')
-          searchResultPoster.classList.add('search-result-poster')
-          searchResultPoster.height = '75'
-          searchResultPoster.alt = 'movie poster'
-
-          if (result.poster_path && result.poster_path !== null) {
-            searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
-          } else {
-            searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+        for (let i = 0; i <= 19; i++) {
+          if (searchIMDbArr[i] && searchIMDbArr[i].media_type === 'movie') {
+            selectedFilterName.innerText = 'All'
+            movieResultsArr.push(searchIMDbArr[i])
+          } else if (searchIMDbArr[i] && searchIMDbArr[i].gender) {
+            peopleResultsArr.push(searchIMDbArr[i])
           }
-
-          const searchResultTextContainer = document.createElement('div')
-          searchResultTextContainer.classList.add('search-result-text-container')
-
-          const searchResultTitle = document.createElement('div')
-          searchResultTitle.classList.add('search-result-title')
-
-          if (result.title !== undefined && result.title !== null) {
-            searchResultTitle.innerText = result.title
-          }
-
-          const searchResultYear = document.createElement('div')
-          searchResultYear.classList.add('search-result-year')
-
-          if (result.release_date) {
-            searchResultYear.innerText = result.release_date.slice(0, 4)
-          }
-
-          const searchResultCast = document.createElement('div')
-          searchResultCast.classList.add('search-result-cast')
-          searchResultCast.innerText = 'TBD calling getMovieCredits()'
-
-          // append the elements
-          searchResultPosterContainer.appendChild(searchResultPoster)
-          searchResultTextContainer.append(searchResultTitle, searchResultYear, searchResultCast)
-          searchResult.append(searchResultPosterContainer, searchResultTextContainer)
-          resultsBox.appendChild(searchResult)
         }
-      })
+
+        console.log('Movies pushed: ')
+        console.log(movieResultsArr)
+
+        console.log('People pushed: ')
+        console.log(peopleResultsArr)
+
+        // create the SEARCH RESULT element for Movies
+        movieResultsArr.forEach(result => {
+          if (result !== undefined) {
+            const searchResult = document.createElement('div')
+            searchResult.classList.add('search-result')
+
+            const searchResultPosterContainer = document.createElement('div')
+            searchResultPosterContainer.classList.add('search-result-poster-container')
+
+            const searchResultPoster = document.createElement('img')
+            searchResultPoster.classList.add('search-result-poster')
+            searchResultPoster.height = '75'
+            searchResultPoster.alt = 'movie poster'
+
+            if (result.poster_path && result.poster_path !== null) {
+              searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
+            } else {
+              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+            }
+
+            const searchResultTextContainer = document.createElement('div')
+            searchResultTextContainer.classList.add('search-result-text-container')
+
+            const searchResultTitle = document.createElement('div')
+            searchResultTitle.classList.add('search-result-title')
+
+            if (result.title !== undefined && result.title !== null) {
+              searchResultTitle.innerText = result.title
+            }
+
+            const searchResultYear = document.createElement('div')
+            searchResultYear.classList.add('search-result-year')
+
+            if (result.release_date) {
+              searchResultYear.innerText = result.release_date.slice(0, 4)
+            }
+
+            const searchResultCast = document.createElement('div')
+            searchResultCast.classList.add('search-result-cast')
+            searchResultCast.innerText = 'TBD calling getMovieCredits()'
+
+            // append the elements
+            searchResultPosterContainer.appendChild(searchResultPoster)
+            searchResultTextContainer.append(searchResultTitle, searchResultYear, searchResultCast)
+            searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+            resultsBox.appendChild(searchResult)
+          }
+        })
+
+        // create the SEARCH RESULT element for People
+        peopleResultsArr.forEach(result => {
+          if (result !== undefined) {
+            const searchResult = document.createElement('div')
+            searchResult.classList.add('search-result')
+
+            const searchResultPosterContainer = document.createElement('div')
+            searchResultPosterContainer.classList.add('search-result-poster-container')
+
+            const searchResultPoster = document.createElement('img')
+            searchResultPoster.classList.add('search-result-poster')
+            searchResultPoster.height = '75'
+            searchResultPoster.alt = 'movie poster'
+
+            if (result.profile_path && result.profile_path !== null) {
+              searchResultPoster.src = `${IMAGE_URL + result.profile_path}`
+            } else {
+              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+            }
+
+            const searchResultTextContainer = document.createElement('div')
+            searchResultTextContainer.classList.add('search-result-text-container')
+
+            const searchResultTitle = document.createElement('div')
+            searchResultTitle.classList.add('search-result-title')
+
+            if (result.name !== undefined && result.name !== null) {
+              searchResultTitle.innerText = result.name
+            }
+
+            const searchResultKnownFor = document.createElement('div')
+            searchResultKnownFor.classList.add('search-result-cast')
+
+            if (result.known_for[0].name) {
+              searchResultKnownFor.innerText = 'Known for: ' + result.known_for[0].name
+            } else if (result.known_for[0].title) {
+              searchResultKnownFor.innerText = 'Known for: ' + result.known_for[0].title
+            }
+
+            // append the elements
+            searchResultPosterContainer.appendChild(searchResultPoster)
+            searchResultTextContainer.append(searchResultTitle, searchResultKnownFor)
+            searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+            resultsBox.appendChild(searchResult)
+          }
+        })
+      } else if (searchType === 'movies') {
+        // create the SEARCH RESULT element for MOVIES filter
+        searchIMDbArr.forEach(result => {
+          if (result !== undefined) {
+            const searchResult = document.createElement('div')
+            searchResult.classList.add('search-result')
+
+            const searchResultPosterContainer = document.createElement('div')
+            searchResultPosterContainer.classList.add('search-result-poster-container')
+
+            const searchResultPoster = document.createElement('img')
+            searchResultPoster.classList.add('search-result-poster')
+            searchResultPoster.height = '75'
+            searchResultPoster.alt = 'movie poster'
+
+            if (result.poster_path && result.poster_path !== null) {
+              searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
+            } else {
+              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+            }
+
+            const searchResultTextContainer = document.createElement('div')
+            searchResultTextContainer.classList.add('search-result-text-container')
+
+            const searchResultTitle = document.createElement('div')
+            searchResultTitle.classList.add('search-result-title')
+
+            if (result.title !== undefined && result.title !== null) {
+              searchResultTitle.innerText = result.title
+            }
+
+            const searchResultYear = document.createElement('div')
+            searchResultYear.classList.add('search-result-year')
+
+            if (result.release_date) {
+              searchResultYear.innerText = result.release_date.slice(0, 4)
+            }
+
+            const searchResultCast = document.createElement('div')
+            searchResultCast.classList.add('search-result-cast')
+            searchResultCast.innerText = 'TBD calling getMovieCredits()'
+
+            // append the elements
+            searchResultPosterContainer.appendChild(searchResultPoster)
+            searchResultTextContainer.append(searchResultTitle, searchResultYear, searchResultCast)
+            searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+            resultsBox.appendChild(searchResult)
+          }
+        })
+      } else if (searchType === 'celebs') {
+        // store people results only into an arr
+        const peopleResultsArr = []
+
+        for (let i = 0; i <= 19; i++) {
+          if (searchIMDbArr[i] && searchIMDbArr[i].gender) {
+            selectedFilterName.innerText = 'Celebs'
+            peopleResultsArr.push(searchIMDbArr[i])
+          }
+        }
+        peopleResultsArr.forEach(result => {
+          if (result !== undefined) {
+            const searchResult = document.createElement('div')
+            searchResult.classList.add('search-result')
+
+            const searchResultPosterContainer = document.createElement('div')
+            searchResultPosterContainer.classList.add('search-result-poster-container')
+
+            const searchResultPoster = document.createElement('img')
+            searchResultPoster.classList.add('search-result-poster')
+            searchResultPoster.height = '75'
+            searchResultPoster.alt = 'movie poster'
+
+            if (result.profile_path && result.profile_path !== null) {
+              searchResultPoster.src = `${IMAGE_URL + result.profile_path}`
+            } else {
+              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+            }
+
+            const searchResultTextContainer = document.createElement('div')
+            searchResultTextContainer.classList.add('search-result-text-container')
+
+            const searchResultTitle = document.createElement('div')
+            searchResultTitle.classList.add('search-result-title')
+
+            if (result.name !== undefined && result.name !== null) {
+              searchResultTitle.innerText = result.name
+            }
+
+            const searchResultKnownFor = document.createElement('div')
+            searchResultKnownFor.classList.add('search-result-cast')
+
+            if (result.known_for[0].name) {
+              searchResultKnownFor.innerText = 'Known for: ' + result.known_for[0].name
+            } else if (result.known_for[0].title) {
+              searchResultKnownFor.innerText = 'Known for: ' + result.known_for[0].title
+            }
+
+            // append the elements
+            searchResultPosterContainer.appendChild(searchResultPoster)
+            searchResultTextContainer.append(searchResultTitle, searchResultKnownFor)
+            searchResult.append(searchResultPosterContainer, searchResultTextContainer)
+            resultsBox.appendChild(searchResult)
+          }
+        })
+      } else if (searchType === 'keywords') {
+        // 'Keywords' filter doesn't return much, so there's nothig worth displaying out there, just IDs and names
+        // for this reason, we won't drop this filter option for UI purposes, instead we'll make it behave just like 'All' filter
+      }
 
       resultsBoxContainer.appendChild(resultsBox)
       searchResultsContainer.append(selectedFilterName, resultsBoxContainer)
