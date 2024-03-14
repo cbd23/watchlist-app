@@ -61,39 +61,21 @@ dropdownMenuBtn.addEventListener('pointerdown', () => {
   dropdownMenuBtn.style.display = 'none'
 })
 
-// create a variable that stores the selected filter's value (to perform the proper SEARCH)
-let searchType
-console.log(searchType)
-
 // "SELECT filter" btns
 allFilterBtn.addEventListener('pointerdown', () => {
-  console.log('All was pressed')
-
   searchFilterText.innerText = 'All'
-  searchType = 'all'
-
-  console.log(searchType)
 })
 
 moviesFilterBtn.addEventListener('pointerdown', () => {
-  console.log('Movies was pressed')
-
   searchFilterText.innerText = 'Movies'
-  searchType = 'movies'
 })
 
 celebsFilterBtn.addEventListener('pointerdown', () => {
-  console.log('Celebs was pressed')
-
   searchFilterText.innerText = 'Celebs'
-  searchType = 'celebs'
 })
 
 keywordsFilterBtn.addEventListener('pointerdown', () => {
-  console.log('Keywords was pressed')
-
   searchFilterText.innerText = 'Keywords'
-  searchType = 'keywords'
 })
 
 // POPULAR section elements:
