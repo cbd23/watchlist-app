@@ -463,13 +463,21 @@ async function getUpcomingMovies (url, options) {
         const cardTextContainer = document.createElement('div')
         cardTextContainer.classList.add('card-text-container')
 
-        const ratingContainer = document.createElement('div')
-        ratingContainer.classList.add('rating-container')
-        ratingContainer.innerHTML = '<svg width="0.9rem" height="0.9rem" xmlns="http://www.w3.org/2000/svg" class="star-icon" viewBox="0 0 24 24" fill="yellow" role="presentation"><path d="M12 20.1l5.82 3.682c1.066.675 2.37-.322 2.09-1.584l-1.543-6.926 5.146-4.667c.94-.85.435-2.465-.799-2.567l-6.773-.602L13.29.89a1.38 1.38 0 0 0-2.581 0l-2.65 6.53-6.774.602C.052 8.126-.453 9.74.486 10.59l5.147 4.666-1.542 6.926c-.28 1.262 1.023 2.26 2.09 1.585L12 20.099z"></path></svg>'
+        const genresContainer = document.createElement('div')
+        genresContainer.classList.add('genres-container')
 
-        const movieCardRating = document.createElement('span')
-        movieCardRating.classList.add('movie-card-rating')
-        movieCardRating.innerText = movie.vote_average.toFixed(1)
+        // store genre_ids for main movie in an arr
+        let movieGenresArr = []
+        movieGenresArr = movie.genre_ids
+
+        // display each genre inside mainGenres element
+        movieGenresArr.forEach(genreId => {
+          const genreName = findGenreNameById(genreId)
+          const movieGenre = document.createElement('div')
+          movieGenre.innerText = genreName
+          movieGenre.classList.add('movie-genre')
+          genresContainer.appendChild(movieGenre)
+        })
 
         const movieCardTitle = document.createElement('div')
         movieCardTitle.classList.add('movie-card-title')
@@ -484,8 +492,7 @@ async function getUpcomingMovies (url, options) {
         trailerBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" role="presentation"><path d="M8 6.82v10.36c0 .79.87 1.27 1.54.84l8.14-5.18a1 1 0 0 0 0-1.69L9.54 5.98A.998.998 0 0 0 8 6.82z"></path></svg>Trailer'
 
         // append the elements
-        ratingContainer.appendChild(movieCardRating)
-        cardTextContainer.appendChild(ratingContainer)
+        cardTextContainer.appendChild(genresContainer)
         cardTextContainer.appendChild(movieCardTitle)
         cardTextContainer.appendChild(addToWatchlistBtn)
         cardTextContainer.appendChild(trailerBtn)
