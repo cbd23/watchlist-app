@@ -842,7 +842,7 @@ async function getMovieTrailer (url, options) {
 }
 
 // add an event listener to the main container of movie cards
-document.addEventListener('click', async function (event) {
+document.addEventListener('pointerdown', async function (event) {
   // check if the clicked element is a "Trailer" btn
   if (event.target.classList.contains('trailer-btn')) {
     // get the movie ID from the corresponding movie card
@@ -856,7 +856,6 @@ document.addEventListener('click', async function (event) {
       const trailerKey = await getMovieTrailer(trailerUrl, OPTIONS)
 
       // play the movie trailer by opening a new YouTube tab
-      console.log('Trailer Key:', trailerKey)
       const trailer = `https://www.youtube.com/watch?v=${trailerKey}`
       window.open(trailer, '_blank')
     } catch (error) {
