@@ -269,7 +269,7 @@ main.search-performed {
 .selected-filter-name::before {
     content: "";
     border: 2px solid rgb(245 197 25); 
-    border-radius: 2px;
+    border-radius: 4px;
     margin-right: 8px;
 }
 
@@ -554,7 +554,7 @@ section {
 .small-section-title::before {
     content: "";
     border: 2px solid rgb(245 197 25); 
-    border-radius: 1px;
+    border-radius: 4px;
     margin-right: 8px;
 }
 
