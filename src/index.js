@@ -449,6 +449,9 @@ async function getUpcomingMovies (url, options) {
         const movieCard = document.createElement('div')
         movieCard.classList.add('movie-card')
 
+        // store movie's id, so we can use it later when getting movie's trailer
+        movieCard.dataset.movieId = movie.id
+
         const cardPosterContainer = document.createElement('div')
         cardPosterContainer.classList.add('card-poster-container')
 
@@ -534,6 +537,9 @@ async function getNowPlayingMovies (url, options) {
       inTheatresMoviesArr.forEach(movie => {
         const movieCard = document.createElement('div')
         movieCard.classList.add('movie-card')
+
+        // store movie's id, so we can use it later when getting movie's trailer
+        movieCard.dataset.movieId = movie.id
 
         const cardPosterContainer = document.createElement('div')
         cardPosterContainer.classList.add('card-poster-container')
@@ -708,6 +714,9 @@ async function getTopRated (url, options) {
         const movieCard = document.createElement('div')
         movieCard.classList.add('movie-card')
 
+        // store movie's id, so we can use it later when getting movie's trailer
+        movieCard.dataset.movieId = movie.id
+
         const cardPosterContainer = document.createElement('div')
         cardPosterContainer.classList.add('card-poster-container')
 
@@ -814,9 +823,16 @@ async function getMovieTrailer (url, options) {
 
     if (response.status === 200) {
       const data = await response.json()
-
-      console.log('MOVIE TRAILER TEST: ')
       console.log(data)
+
+      // now we return the key needed to access the YouTube link
+      for (let i = 0; i <= 19; i++) {
+        if (data.results[i].type && data.results[i].type === 'Trailer') {
+          return data.results[i].key
+        }
+      }
+
+      // return data.results[0].key
     } else {
       console.log('There was a problem with the request.')
     }
@@ -825,15 +841,29 @@ async function getMovieTrailer (url, options) {
   }
 }
 
-// movie_id for 'No Way Up' - for testing purposes
-const MOVIE_ID = 1096197
-const MOVIE_TRAILER_URL = BASE_URL + `/movie/${MOVIE_ID}/videos?language=en-US`
+// add an event listener to the main container of movie cards
+document.addEventListener('click', async function (event) {
+  // check if the clicked element is a "Trailer" btn
+  if (event.target.classList.contains('trailer-btn')) {
+    // get the movie ID from the corresponding movie card
+    const movieCard = event.target.closest('.movie-card')
+    const movieId = movieCard.dataset.movieId // here's where we use the 'data-movie-id' created inside every movie card
 
-// getMovieTrailer(MOVIE_TRAILER_URL, OPTIONS)
+    // use the movie ID to fetch the trailer
+    const trailerUrl = BASE_URL + `/movie/${movieId}/videos?language=en-US`
+    try {
+      // fetch the trailer using the getMovieTrailer()
+      const trailerKey = await getMovieTrailer(trailerUrl, OPTIONS)
 
-// key received in object --- UJa1zUYegqo
-// valid YouTube link using the key: https://www.youtube.com/watch?v=UJa1zUYegqo
-// this will be opened with taget = "_blank" on an <a> element that has href ="https://www.youtube.com/watch?v=UJa1zUYegqo"
+      // play the movie trailer by opening a new YouTube tab
+      console.log('Trailer Key:', trailerKey)
+      const trailer = `https://www.youtube.com/watch?v=${trailerKey}`
+      window.open(trailer, '_blank')
+    } catch (error) {
+      console.log('Error fetching trailer:', error)
+    }
+  }
+})
 
 // GET 'MOVIE CREDITS' passing movie_id
 async function getMovieCredits (id, options) {
