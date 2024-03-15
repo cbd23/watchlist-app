@@ -375,7 +375,10 @@ async function searchIMDb (url, options, searchTerm, searchType) {
       }
 
       document.querySelector('body').insertBefore(mainSearchPerformed, bodyChildren.footer)
+
+      // adjust colors for the white background of 'the new' main element
       document.querySelector('html').style.backgroundColor = '#fafafa'
+      document.querySelector('.disclaimer').style.color = 'black'
 
       console.log('SEARCH RESULTS: ')
       console.log(searchIMDbArr)
