@@ -743,7 +743,18 @@ button > svg {
 }
 
 footer {
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
     grid-area: 3 / 1 / span 1 / -1;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer .disclaimer {
+    /* border: 1px solid deeppink; */
+    margin: 0 4rem;
+    color: #FFFFFFB3;
+    font-size: 0.9rem;
+    text-align: center;
 }
