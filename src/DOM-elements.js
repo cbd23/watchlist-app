@@ -20,6 +20,11 @@ const searchIconBtn = document.querySelector('.search-icon-container')
 const searchFilterText = document.querySelector('.search-filter-text')
 const dropdownMenuBtn = document.querySelector('.dropdown-menu')
 
+// RELOAD website when clicking HOME btn
+homeBtn.addEventListener('pointerdown', () => {
+  window.location.href = 'http://127.0.0.1:3000/dist/index.html'
+})
+
 // inside dropdown menu
 const allFilterBtn = document.querySelector('.all-filter-btn')
 const moviesFilterBtn = document.querySelector('.movies-filter-btn')
