@@ -466,9 +466,14 @@ async function getUpcomingMovies (url, options) {
         const genresContainer = document.createElement('div')
         genresContainer.classList.add('genres-container')
 
-        // store genre_ids for main movie in an arr
-        let movieGenresArr = []
-        movieGenresArr = movie.genre_ids
+        // store maximum 2 genre_ids for main movie in an arr
+        const movieGenresArr = []
+
+        if (movie.genre_ids[0] && movie.genre_ids[1]) {
+          movieGenresArr.push(movie.genre_ids[0], movie.genre_ids[1])
+        } else if (movie.genre_ids[0]) {
+          movieGenresArr.push(movie.genre_ids[0])
+        }
 
         // display each genre inside mainGenres element
         movieGenresArr.forEach(genreId => {
