@@ -51,7 +51,6 @@ li {
     margin: 6px;
 }
 
-/* CREATE 'btn' utility class and put cursor:pointer ONLY ONCE */
 .logo-container {
     cursor: pointer;
 }
@@ -183,7 +182,6 @@ li > svg.filter-icon {
     align-self: center;
 }
 
-
 .watchlist-container {
     /* border: 1px solid red; */
 
@@ -212,9 +210,144 @@ li > svg.filter-icon {
     margin-left: 4px;
 }
 
-main {
-    /* border: 2px solid red; */
+dialog.watchlist-modal {
+    background-color: #121212;
+    border: 1px solid whitesmoke;
+    border-radius: 8px;
+    box-shadow: 0px 0px 6px 2px whitesmoke;
+    height: 70vh;
+    width: 70vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+}
 
+.watchlist-modal-content {
+    background-color: rgb(26, 26, 26);
+    color: white; 
+    display: flex;
+    flex-direction: column;
+}
+
+.watchlist-modal-title {
+    background-color: #121212;
+    color: #F5C518;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px;
+    flex: 1;
+}
+
+.watchlist-modal-movies-container {
+    flex: 9;
+}
+
+.watchlist-ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.watchlist-movie-card {
+    width: 95%;
+    height: 40%;
+    flex: 1;
+    padding: 4px;
+    display: flex;
+}
+
+.watchlist-movie-card:nth-child(even) {
+    background-color: #121212;
+}
+
+.movie-info {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.watchlist-movie-poster-container {
+    margin: 4px;
+}
+
+.watchlist-movie-text {
+    padding: 4px;
+    width: fit-content;
+}
+
+.watchlist-movie-title,
+.watchlist-movie-genres,
+.watchlist-movie-actors {
+    margin: 4px;
+    padding: 0 4px;
+}
+
+.watchlist-movie-title {
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+}
+
+.watchlist-movie-genres,
+.watchlist-movie-actors {
+    font-size: 0.9rem;
+    color: whitesmoke
+}
+
+.movie-actions {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1;
+}
+
+.movie-actions svg,
+#watchlist-modal-viewed-movie {
+    margin-right: 2px;
+}
+
+.watchlist-modal-action-btn {
+    border: 1px solid cyan;
+    border-radius: 4px;
+    height: 24px;
+    margin: 8px;
+    padding: 0 6px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.watchlist-modal-action-btn:hover {
+    filter: brightness(0.8);
+}
+
+input#watchlist-modal-viewed-movie {
+    margin: 0 4px;
+}
+
+.watchlist-close-btn {
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    font-weight: bold;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.watchlist-close-btn:hover {
+    filter: brightness(0.8);
+}
+
+main {
     grid-area: 2 / 2 / span 1 / span 1;
     display: flex;
     flex-direction: column;
