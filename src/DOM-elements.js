@@ -20,6 +20,21 @@ const searchIconBtn = document.querySelector('.search-icon-container')
 const searchFilterText = document.querySelector('.search-filter-text')
 const dropdownMenuBtn = document.querySelector('.dropdown-menu')
 
+// store watchlist modal elements
+const watchlistModal = document.querySelector('.watchlist-modal')
+const watchlistModalBtn = document.querySelector('.watchlist-container')
+const watchlistCloseBtn = document.querySelector('.watchlist-close-btn')
+
+// open watchlist-modal
+watchlistModalBtn.addEventListener('pointerdown', () => {
+  watchlistModal.showModal()
+})
+
+// close watchlist-modal
+watchlistCloseBtn.addEventListener('pointerdown', () => {
+  watchlistModal.close()
+})
+
 // RELOAD website when clicking HOME btn
 homeBtn.addEventListener('pointerdown', () => {
   window.location.href = 'http://127.0.0.1:3000/dist/index.html'
@@ -39,6 +54,9 @@ export const buttons = {
   searchIconBtn,
   searchFilterText,
   dropdownMenuBtn,
+  watchlistModal,
+  watchlistModalBtn,
+  watchlistCloseBtn,
   allFilterBtn,
   moviesFilterBtn,
   celebsFilterBtn,
