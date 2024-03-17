@@ -310,7 +310,6 @@ dialog.watchlist-modal {
 }
 
 .watchlist-modal-action-btn {
-    border: 1px solid cyan;
     border-radius: 4px;
     height: 24px;
     margin: 8px;
@@ -356,45 +355,32 @@ main {
 }
 
 main.search-performed {
-    /* border: 2px solid red; */
     background-color: #fafafa;
-
     grid-area: 2 / 2 / span 1 / span 1;
     display: flex;
     flex-direction: column;
     margin: auto;
     max-width: 1260px;
-
     min-height: 100vh;
     width: 100%;
 }
 
 .search-term-displayed {
-    /* border: 2px solid green; */
-
     width: 800px;
     height: 80px;
     margin: 0 20px;
     padding: 20px 0;
-
     font-size: 3rem;
-
 }
 
 .search-results-container {
-    /* border: 2px solid blue; */
-
     width: 800px;
     margin: 0 20px;
-
 }
 
 .selected-filter-name {
-    /* border: 1px solid deeppink; */
-
     width: 90%;
     margin: 20px 0px;
-
     font-size: 1.8rem;
     font-weight: 600;
 }
@@ -412,9 +398,7 @@ main.search-performed {
 }
 
 .results-box {
-    /* border: 1px solid black; */
     margin: 25px;
-
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -422,8 +406,6 @@ main.search-performed {
 }
 
 .search-result {
-    /* border: 1px solid red; */
-
     border-bottom: 1px solid rgb(193, 193, 193);
     flex: 1;
     display: flex;
@@ -436,8 +418,6 @@ main.search-performed {
 }
 
 .search-result-poster-container {
-    /* border: 1px solid yellowgreen; */
-
     display: flex;
     align-items: center;
     margin-right: 8px;
@@ -448,13 +428,9 @@ main.search-performed {
 }
 
 .search-result-text-container {
-    /* border: 1px solid magenta; */
-
     height: 75px;
-
     color: #737373;
     font-size: 0.9rem;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -471,18 +447,13 @@ section {
 }
 
 .popular {
-    /* border: 1px solid deeppink; */
-
     background-color: black;
-    /* grid-area: 1 / 1 / span 1 / -1; */
     min-height: 550px;
     display: flex;
     gap: 10px;
 }
 
 .main-popular-section {
-    /* border: 2px solid red; */
-
     min-width: 800px;
     flex: 2;
     display: flex;
@@ -492,8 +463,6 @@ section {
 }
 
 .main-image-container {
-    /* border: 1px solid yellowgreen; */
-
     position: relative;
     filter: brightness(75%);
 }
@@ -512,8 +481,6 @@ section {
 
 
 .main-text-container {
-    /* border: 2px solid green; */
-
     color: white;
     bottom: 0;
     margin-right: auto;
@@ -530,8 +497,6 @@ section {
 }
 
 .main-title {
-    /* border: 1px solid white; */
-
     width: fit-content;
     font-size: 2rem;
     padding: 10px;
@@ -550,8 +515,6 @@ section {
 }
 
 .main-genres {
-    /* border: 1px solid cyan; */
-
     font-size: 1rem;
     display: flex;
     flex-direction: row;
@@ -569,15 +532,11 @@ section {
 }
 
 .main-overview {
-    /* border: 1px solid white; */
     margin: 10px;
     width: 100%;
 }
 
-
 .secondary-popular-section {
-    /* border: 2px solid blue; */
-
     min-width: 350px;
     max-height: 580px;
     position: relative;
@@ -595,8 +554,6 @@ section {
 }
 
 .pop-movie-container {
-    /* border: 1px solid white; */
-
     color: white;
     display: flex;
     flex-direction: row;
@@ -630,12 +587,10 @@ section {
 
 .secondary-popular-section img {
     border: 1px solid white;
-
     z-index: 1;
     position: relative;
     margin: 10px;
     display: flex;
-
 }
 
 .secondary-text-container {
@@ -663,14 +618,11 @@ section {
     width: fit-content;
 }
 
-
-
 .small-section {
     height: 550px;
     color: white;
     min-width: 1160px;
 }
-
 
 .in-theatres {
     margin-top: 40px;
