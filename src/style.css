@@ -217,11 +217,12 @@ dialog.watchlist-modal {
     box-shadow: 0px 0px 6px 2px whitesmoke;
     height: 70vh;
     width: 70vw;
-    position: fixed;
+    /* position: fixed; */
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     position: relative;
+
 }
 
 .watchlist-modal-content {
@@ -842,4 +843,106 @@ footer .disclaimer {
     color: #FFFFFFB3;
     font-size: 0.9rem;
     text-align: center;
+}
+
+dialog.movie-infocard-modal {
+    /* border: 1px solid red; */
+    border-radius: 4px;
+    background-color: #1f1f1f;
+
+    width: 665px;
+    height: 370px;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: relative;
+
+}
+
+.movie-infocard-close-btn {
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    font-weight: bold;
+    top: 8px;
+    right: 8px;
+    cursor: pointer;
+    color: white;
+}
+
+.movie-infocard-close-btn:hover {
+    filter: brightness(0.8);
+}
+
+.movie-infocard-content {
+    border: 1px solid blue;
+
+    height: 99%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.movie-infocard-upper {
+    margin: 4px;
+    border: 1px solid deeppink;
+
+    margin: 24px 24px 10px;
+
+    flex: 2;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.movie-infocard-upper-poster-container { 
+
+    border: 1px solid wheat;
+
+    display: flex;
+    align-items: center;
+
+    margin-right: 10px;
+}
+
+.movie-infocard-upper-text {
+    border: 1px solid pink;
+
+    padding: 4px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.movie-infocard-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.movie-infocard-lower {
+    margin: 4px;
+    border: 1px solid yellow;
+
+    margin: 10px 24px;
+
+    flex: 2;
+    color: white;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.movie-infocard-btns {
+    margin: 4px;
+    border: 1px solid whitesmoke;
+    margin: 10px 24px;
+    flex: 1;
+    display: flex;
 }
