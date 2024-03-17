@@ -853,7 +853,6 @@ async function getMovieTrailer (url, options) {
 
     if (response.status === 200) {
       const data = await response.json()
-      console.log(data)
 
       // now we return the key needed to access the YouTube link
       for (let i = 0; i <= 19; i++) {
@@ -912,9 +911,8 @@ document.addEventListener('pointerdown', async function (event) {
     )
 
     watchlist.addToWatchlist(movie)
+    console.log('Updated Watchlist:')
     console.log(watchlist)
-    console.log(movie)
-    console.log(movie.id)
   }
 })
 
@@ -934,7 +932,6 @@ buttons.watchlistModal.addEventListener('pointerdown', async function (event) {
 
     // Extract the movie ID
     const movieId = getMovieId(movieCard)
-    console.log(movieId)
 
     // use the movie ID to fetch the trailer
     const trailerUrl = BASE_URL + `/movie/${movieId}/videos?language=en-US`
@@ -960,7 +957,6 @@ buttons.watchlistModal.addEventListener('click', (event) => {
 
     // Extract the movie ID
     const movieId = getMovieId(movieCard)
-    console.log(movieId)
 
     // Find the corresponding movie object from the watchlist
     const movieToRemove = watchlist.watchlistArr.find(movie => movie.id === movieId)
@@ -969,6 +965,8 @@ buttons.watchlistModal.addEventListener('click', (event) => {
     if (movieToRemove) {
       // Call the removeFromWatchlist method of the Watchlist class
       watchlist.removeFromWatchlist(movieToRemove)
+      console.log('Updated Watchlist:')
+      console.log(watchlist)
     } else {
       console.error('Movie not found in watchlist.')
     }
