@@ -1,5 +1,3 @@
-import { findGenreNameById } from './index.js'
-
 const IMAGE_URL = 'https://image.tmdb.org/t/p/original'
 
 export class Movie {
@@ -85,11 +83,11 @@ export class Watchlist {
 
       const movieTitle = document.createElement('div')
       movieTitle.classList.add('watchlist-movie-title')
-      movieTitle.innerText = `${movie.title} (${movie.releaseDate})`
+      movieTitle.innerText = `${movie.title}`
 
       const movieGenres = document.createElement('div')
       movieGenres.classList.add('watchlist-movie-genres')
-      movieGenres.innerText = findGenreNameById(movie.genreIds)
+      movieGenres.innerText = `(${movie.releaseDate})`
 
       movieText.appendChild(movieTitle)
       movieText.appendChild(movieGenres)
