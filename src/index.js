@@ -1,5 +1,5 @@
 import './style.css'
-import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer, bodyChildren } from './DOM-elements.js'
+import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer, bodyChildren, infocardModal } from './DOM-elements.js'
 import { genreData } from './genre-data.js'
 import { Movie, Watchlist } from './classes.js'
 // import { API_KEY } from './cred'
