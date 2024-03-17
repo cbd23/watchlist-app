@@ -153,7 +153,7 @@ async function searchIMDb (url, options, searchTerm, searchType) {
             if (result.poster_path && result.poster_path !== null) {
               searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
             } else {
-              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+              searchResultPoster.src = 'https://raw.githubusercontent.com/cbd23/watchlist-app/main/src/images/placeholder-movie-poster.png'
             }
 
             const searchResultTextContainer = document.createElement('div')
@@ -212,7 +212,7 @@ async function searchIMDb (url, options, searchTerm, searchType) {
             if (result.profile_path && result.profile_path !== null) {
               searchResultPoster.src = `${IMAGE_URL + result.profile_path}`
             } else {
-              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+              searchResultPoster.src = 'https://raw.githubusercontent.com/cbd23/watchlist-app/main/src/images/placeholder-movie-poster.png'
             }
 
             const searchResultTextContainer = document.createElement('div')
@@ -262,7 +262,7 @@ async function searchIMDb (url, options, searchTerm, searchType) {
             if (result.poster_path && result.poster_path !== null) {
               searchResultPoster.src = `${IMAGE_URL + result.poster_path}`
             } else {
-              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+              searchResultPoster.src = 'https://raw.githubusercontent.com/cbd23/watchlist-app/main/src/images/placeholder-movie-poster.png'
             }
 
             const searchResultTextContainer = document.createElement('div')
@@ -329,7 +329,7 @@ async function searchIMDb (url, options, searchTerm, searchType) {
             if (result.profile_path && result.profile_path !== null) {
               searchResultPoster.src = `${IMAGE_URL + result.profile_path}`
             } else {
-              searchResultPoster.src = '../src/images/placeholder-movie-poster.png'
+              searchResultPoster.src = 'https://raw.githubusercontent.com/cbd23/watchlist-app/main/src/images/placeholder-movie-poster.png'
             }
 
             const searchResultTextContainer = document.createElement('div')
