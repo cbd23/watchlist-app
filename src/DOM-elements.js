@@ -40,6 +40,21 @@ homeBtn.addEventListener('pointerdown', () => {
   window.location.href = 'http://127.0.0.1:3000/dist/index.html'
 })
 
+// MOVIE INFOCARD MODAL
+const movieInfocardModal = document.querySelector('.movie-infocard-modal')
+const movieInfocardCloseBtn = document.querySelector('.movie-infocard-close-btn')
+const movieInfocardContent = document.querySelector('.movie-infocard-content')
+
+export const infocardModal = {
+  movieInfocardModal,
+  movieInfocardCloseBtn,
+  movieInfocardContent
+}
+
+movieInfocardCloseBtn.addEventListener('pointerdown', () => {
+  movieInfocardModal.close()
+})
+
 // inside dropdown menu
 const allFilterBtn = document.querySelector('.all-filter-btn')
 const moviesFilterBtn = document.querySelector('.movies-filter-btn')
