@@ -1,6 +1,7 @@
 import './style.css'
 import { buttons, popularElements, movieCardsContainers, trendingPeopleCardsContainer, bodyChildren } from './DOM-elements.js'
 import { genreData } from './genre-data.js'
+import { Movie, Watchlist } from './classes.js'
 // import { API_KEY } from './cred'
 
 // store the base url, that'll be used in every request
@@ -14,6 +15,8 @@ const OPTIONS = {
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0Yjk1ZGI3Zjc2M2FjMjA0NzBiZTdiYWI5N2QxYzY5ZiIsInN1YiI6IjY1YzNhNmI0OGMwYTQ4MDE2NDg1YWUwNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.rTWg4CfQZHMbgjAz5Znn5-5daI5seOIaaiVfi5B7qXk'
   }
 }
+
+const watchlist = new Watchlist('My Watchlist')
 
 // create a variable that will store the SELECTED search type
 let searchType
@@ -425,7 +428,7 @@ const IMAGE_URL = 'https://image.tmdb.org/t/p/original'
 
 // create a fn that takes a genreId as an arg and returns the genre's name
 // this uses the genreData arr from our 'genre-data.js' module
-function findGenreNameById (genreId) {
+export function findGenreNameById (genreId) {
   const genre = genreData.find(genre => genre.id === genreId)
   return genre ? genre.name : 'Unknown'
 }
@@ -451,6 +454,15 @@ async function getUpcomingMovies (url, options) {
       upcomingMoviesArr.forEach(movie => {
         const movieCard = document.createElement('div')
         movieCard.classList.add('movie-card')
+
+        // store movie's info, so we can use it later when getting movie's trailer / displaying it inside the watchlist
+        movieCard.dataset.movieId = movie.id
+        movieCard.dataset.movieTitle = movie.title
+        movieCard.dataset.movieOverview = movie.overview
+        movieCard.dataset.movieReleaseYear = movie.release_date.slice(0, 4)
+        movieCard.dataset.movieGenreIds = movie.genre_ids
+        movieCard.dataset.moviePosterPath = movie.poster_path
+        movieCard.dataset.movieVoteAverage = movie.vote_average
 
         // store movie's id, so we can use it later when getting movie's trailer
         movieCard.dataset.movieId = movie.id
@@ -540,6 +552,15 @@ async function getNowPlayingMovies (url, options) {
       inTheatresMoviesArr.forEach(movie => {
         const movieCard = document.createElement('div')
         movieCard.classList.add('movie-card')
+
+        // store movie's info, so we can use it later when getting movie's trailer / displaying it inside the watchlist
+        movieCard.dataset.movieId = movie.id
+        movieCard.dataset.movieTitle = movie.title
+        movieCard.dataset.movieOverview = movie.overview
+        movieCard.dataset.movieReleaseYear = movie.release_date.slice(0, 4)
+        movieCard.dataset.movieGenreIds = movie.genre_ids
+        movieCard.dataset.moviePosterPath = movie.poster_path
+        movieCard.dataset.movieVoteAverage = movie.vote_average
 
         // store movie's id, so we can use it later when getting movie's trailer
         movieCard.dataset.movieId = movie.id
@@ -717,8 +738,14 @@ async function getTopRated (url, options) {
         const movieCard = document.createElement('div')
         movieCard.classList.add('movie-card')
 
-        // store movie's id, so we can use it later when getting movie's trailer
+        // store movie's info, so we can use it later when getting movie's trailer / displaying it inside the watchlist
         movieCard.dataset.movieId = movie.id
+        movieCard.dataset.movieTitle = movie.title
+        movieCard.dataset.movieOverview = movie.overview
+        movieCard.dataset.movieReleaseYear = movie.release_date.slice(0, 4)
+        movieCard.dataset.movieGenreIds = movie.genre_ids
+        movieCard.dataset.moviePosterPath = movie.poster_path
+        movieCard.dataset.movieVoteAverage = movie.vote_average
 
         const cardPosterContainer = document.createElement('div')
         cardPosterContainer.classList.add('card-poster-container')
@@ -844,7 +871,8 @@ async function getMovieTrailer (url, options) {
   }
 }
 
-// add an event listener to the main container of movie cards
+// add event listener for 'Trailer' - using event delegation
+// this will play a movie's trailer in a new tab (for movie cards inside small sections)
 document.addEventListener('pointerdown', async function (event) {
   // check if the clicked element is a "Trailer" btn
   if (event.target.classList.contains('trailer-btn')) {
@@ -863,6 +891,86 @@ document.addEventListener('pointerdown', async function (event) {
       window.open(trailer, '_blank')
     } catch (error) {
       console.log('Error fetching trailer:', error)
+    }
+  }
+})
+
+// add event listener to for 'Add to Watchlist' - also using event delegation
+document.addEventListener('pointerdown', async function (event) {
+  // check if the clicked element is a "Watchlist" btn
+  if (event.target.classList.contains('add-to-watchlist')) {
+    // create an object that stores the movie's info using the Movie class
+    const movieCard = event.target.closest('.movie-card')
+    const movie = new Movie(
+      movieCard.dataset.movieId,
+      movieCard.dataset.movieTitle,
+      movieCard.dataset.movieOverview,
+      movieCard.dataset.movieReleaseYear,
+      movieCard.dataset.movieGenreIds,
+      movieCard.dataset.moviePosterPath,
+      movieCard.dataset.movieVoteAverage
+    )
+
+    watchlist.addToWatchlist(movie)
+    console.log(watchlist)
+    console.log(movie)
+    console.log(movie.id)
+  }
+})
+
+// Function to extract movie ID from a movie card
+function getMovieId (movieCard) {
+  // Extract the movie ID from the dataset attribute or any other suitable method
+  return movieCard.dataset.movieId // Assuming you have a dataset attribute 'movieId' on each movie card
+}
+
+// add event listener for 'Trailer' - using event delegation
+// this will play a movie's trailer in a new tab (for movie cards inside the Watchlise)
+buttons.watchlistModal.addEventListener('pointerdown', async function (event) {
+  // check if the clicked element is a "Trailer" btn
+  if (event.target.classList.contains('watch-trailer-action')) {
+    // Find the parent li element of the clicked delete button
+    const movieCard = event.target.closest('.watchlist-movie-card')
+
+    // Extract the movie ID
+    const movieId = getMovieId(movieCard)
+    console.log(movieId)
+
+    // use the movie ID to fetch the trailer
+    const trailerUrl = BASE_URL + `/movie/${movieId}/videos?language=en-US`
+    try {
+      // fetch the trailer using the getMovieTrailer()
+      const trailerKey = await getMovieTrailer(trailerUrl, OPTIONS)
+
+      // play the movie trailer by opening a new YouTube tab
+      const trailer = `https://www.youtube.com/watch?v=${trailerKey}`
+      window.open(trailer, '_blank')
+    } catch (error) {
+      console.log('Error fetching trailer:', error)
+    }
+  }
+})
+
+// Add an event listener to the watchlist modal for the remove button
+buttons.watchlistModal.addEventListener('click', (event) => {
+  // Check if the clicked element has the class 'delete-action'
+  if (event.target.classList.contains('delete-action')) {
+    // Find the parent li element of the clicked delete button
+    const movieCard = event.target.closest('.watchlist-movie-card')
+
+    // Extract the movie ID
+    const movieId = getMovieId(movieCard)
+    console.log(movieId)
+
+    // Find the corresponding movie object from the watchlist
+    const movieToRemove = watchlist.watchlistArr.find(movie => movie.id === movieId)
+
+    // Check if the movieToRemove object is valid
+    if (movieToRemove) {
+      // Call the removeFromWatchlist method of the Watchlist class
+      watchlist.removeFromWatchlist(movieToRemove)
+    } else {
+      console.error('Movie not found in watchlist.')
     }
   }
 })
