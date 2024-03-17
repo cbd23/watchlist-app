@@ -37,7 +37,7 @@ watchlistCloseBtn.addEventListener('pointerdown', () => {
 
 // RELOAD website when clicking HOME btn
 homeBtn.addEventListener('pointerdown', () => {
-  window.location.href = 'http://127.0.0.1:3000/dist/index.html'
+  window.location.href = 'https://cbd23.github.io/watchlist-app/'
 })
 
 // MOVIE INFOCARD MODAL
