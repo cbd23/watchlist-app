@@ -5,7 +5,7 @@
 <div id="top"></div>
   
 ## IMDb Clone App
----
+
 <a href="https://cbd23.github.io/watchlist-app" target="_blank">🕹 Live Demo here</a>
 
 
