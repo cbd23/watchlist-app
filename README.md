@@ -2,11 +2,12 @@
 <br>
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E) ![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white) ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black) ![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)
 
-<div id="top></div>
+<div id="top"></div>
   
 ## IMDb Clone App
 ---
 🕹 [Live Demo here](https://cbd23.github.io/watchlist-app)
+
 
 ### Introduction
 This **IMDb Clone App** is my final project for graduating from the **Web Development with JavaScript** course at the [Informal School of IT](https://scoalainformala.ro/).
