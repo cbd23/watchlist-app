@@ -6,11 +6,11 @@
   
 ## IMDb Clone App
 ---
-🕹 [Live Demo here](https://cbd23.github.io/watchlist-app)
+🕹 [Live Demo here](https://cbd23.github.io/watchlist-app){:target="_blank"}
 
 
 ### Introduction
-This **IMDb Clone App** is my final project for graduating from the **Web Development with JavaScript** course at the [Informal School of IT](https://scoalainformala.ro/).
+This **IMDb Clone App** is my final project for graduating from the **Web Development with JavaScript** course at the [Informal School of IT](https://scoalainformala.ro/){:target="_blank"}.
 I created it using the API provided by The Movie Database (TMDB).
 <br>
 I chose to build this project because I wanted to challenge myself like never before and also apply as many newly learned concepts as I could, from writing semantic HTML to promises and asynchronous code.
