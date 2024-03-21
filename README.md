@@ -6,7 +6,7 @@
   
 ## IMDb Clone App
 ---
-🕹 [Live Demo here](https://cbd23.github.io/watchlist-app){:target="_blank"}
+<a href="https://cbd23.github.io/watchlist-app" target="_blank">🕹 Live Demo here</a>
 
 
 ### Introduction
